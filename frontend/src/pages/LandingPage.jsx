@@ -94,7 +94,7 @@ export default function LandingPage() {
               India's Smartest Quiz Arena — compete in real quiz battles, rank higher, win real prizes.
             </p>
             <div className="hero-actions">
-              <button className="primary-btn">Start Playing — ₹1</button>
+              <button className="primary-btn">Join Quiz</button>
               <button className="secondary-btn">Watch Demo</button>
             </div>
             <div className="stats-row">
