@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Menu, X, Home, Trophy, Wallet, BarChart3, User, Check } from "lucide-react";
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleOpenLogin = () => {
     navigate("/login");
@@ -29,32 +31,54 @@ export default function LandingPage() {
     <div className="page">
       <header className="topbar">
         <div className="topbar-inner">
-          <div className="logo-boxes">
+          <div className="logo-boxes" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
             <div className="logo-box">Q</div>
             <div className="logo-box">U</div>
             <div className="logo-box">Z</div>
             <div className="logo-box">O</div>
           </div>
-          <nav className="nav-links">
-            <a href="#home">Home</a>
-            <a href="#how">How it works</a>
-            <a href="#contests">Contests</a>
-            <a href="#faq">FAQ</a>
+          
+          <nav className={`nav-links ${isMenuOpen ? "open" : ""}`}>
+            <a href="#home" onClick={() => setIsMenuOpen(false)}>Home</a>
+            <a href="#how" onClick={() => setIsMenuOpen(false)}>How it works</a>
+            <a href="#contests" onClick={() => setIsMenuOpen(false)}>Contests</a>
+            <a href="#faq" onClick={() => setIsMenuOpen(false)}>FAQ</a>
+            {!isLoggedIn && (
+              <>
+                <button className="secondary-btn mobile-only" onClick={() => navigate("/register")}>
+                  Signup
+                </button>
+                <button className="login-btn mobile-only" onClick={handleOpenLogin}>
+                  Login
+                </button>
+              </>
+            )}
           </nav>
 
-          {!isLoggedIn ? (
-            <button className="login-btn" onClick={handleOpenLogin}>
-              Login
-            </button>
-          ) : (
-            <div className="user-chip" style={{ display: "flex" }}>
-              <div className="avatar">A</div>
-              <div>
-                <div style={{ fontSize: "12px", fontWeight: "800" }}>Aman Kumar</div>
-                <div style={{ fontSize: "11px", color: "#cbd5e1" }}>+91 98XXXXXX21</div>
+          <div className="header-actions">
+            {!isLoggedIn ? (
+              <>
+                <button className="secondary-btn desktop-only" style={{ padding: "10px 18px", borderRadius: "12px", fontSize: "14px" }} onClick={() => navigate("/register")}>
+                  Signup
+                </button>
+                <button className="login-btn desktop-only" onClick={handleOpenLogin}>
+                  Login
+                </button>
+              </>
+            ) : (
+              <div className="user-chip desktop-only" style={{ display: "flex" }}>
+                <div className="avatar">A</div>
+                <div>
+                  <div style={{ fontSize: "12px", fontWeight: "800" }}>Aman Kumar</div>
+                  <div style={{ fontSize: "11px", color: "#cbd5e1" }}>+91 98XXXXXX21</div>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+            
+            <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -67,29 +91,28 @@ export default function LandingPage() {
               <span>what you learn.</span>
             </h1>
             <p>
-              A mobile-first quiz platform for competitive exam aspirants. Join live quizzes before deadline, answer
-              within time, and compete on leaderboard for performance-based rewards.
+              India's Smartest Quiz Arena — compete in real quiz battles, rank higher, win real prizes.
             </p>
             <div className="hero-actions">
-              <button className="primary-btn">Unlock Quiz</button>
+              <button className="primary-btn">Start Playing — ₹1</button>
               <button className="secondary-btn">Watch Demo</button>
             </div>
             <div className="stats-row">
               <div className="stat-card">
                 <strong>50K+</strong>
-                <span>Users reached</span>
+                <span>Active Players</span>
               </div>
               <div className="stat-card">
-                <strong>100+</strong>
-                <span>Daily quizzes</span>
+                <strong>₹10L+</strong>
+                <span>Prize Distributed</span>
               </div>
               <div className="stat-card">
-                <strong>Top 3</strong>
-                <span>Rewarded</span>
+                <strong>1000+</strong>
+                <span>Daily Contests</span>
               </div>
               <div className="stat-card">
-                <strong>10+</strong>
-                <span>Exam categories</span>
+                <strong>4.8★</strong>
+                <span>User Rating</span>
               </div>
             </div>
           </div>
@@ -163,7 +186,7 @@ export default function LandingPage() {
       <section className="section white" id="how">
         <div className="section-inner">
           <div className="center-head">
-            <div className="eyebrow">How it works</div>
+            <div className="eyebrow">Steps</div>
             <h2>Earn from what you learn.</h2>
             <div className="subtext">
               Join live quizzes, compete with others, and prove your knowledge under real-time pressure.
@@ -194,23 +217,173 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="section white">
+      <section className="section" style={{ backgroundColor: "#f1f5f9" }}>
         <div className="section-inner">
           <div className="center-head">
-            <div className="eyebrow">Categories</div>
-            <h2>Live quizzes at scheduled times.</h2>
+            <div className="eyebrow" style={{ color: "#0d1f3c" }}>How it works</div>
+            <h2 style={{ color: "#0d1f3c" }}>How it works</h2>
+            <div className="subtext" style={{ color: "#64748b" }}>
+              3 simple steps to win real prizes
+            </div>
           </div>
-          <div className="tags">
+          <div className="steps-grid three-cols">
+            <div className="step-card">
+              <div className="step-num">1</div>
+              <h3>Choose your exam</h3>
+              <p>Select from UPSC, SSC, NEET, JEE, Bank & more</p>
+            </div>
+            <div className="step-card">
+              <div className="step-num">2</div>
+              <h3>Pay & join</h3>
+              <p>Entry starts at ₹1. Join live quiz battle with real players</p>
+            </div>
+            <div className="step-card">
+              <div className="step-num">3</div>
+              <h3>Rank & win</h3>
+              <p>Answer correctly & fast. Top rankers win real cash prizes</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section white" id="pricing">
+        <div className="section-inner">
+          <div className="center-head">
+            <div className="eyebrow">Price Plans</div>
+            <h2>Simple pricing</h2>
+            <div className="subtext">
+              Start free. Win real.
+            </div>
+          </div>
+
+          <div className="price-grid">
+            <div className="price-card">
+              <div className="pill exam">Free</div>
+              <div className="price-amount">
+                <strong>₹0</strong>
+                <span>/month</span>
+              </div>
+              <div className="price-list">
+                <div className="price-item">
+                  <Check size={16} /> Unlimited practice
+                </div>
+                <div className="price-item">
+                  <Check size={16} /> All exam categories
+                </div>
+                <div className="price-item">
+                  <Check size={16} /> Basic leaderboard
+                </div>
+              </div>
+              <button className="card-btn">Get started free</button>
+            </div>
+
+            <div className="price-card featured">
+              <div className="pill popular">Most Popular</div>
+              <div className="price-amount">
+                <strong>₹1</strong>
+                <span>/contest</span>
+              </div>
+              <div className="price-list">
+                <div className="price-item">
+                  <Check size={16} /> Live competitions
+                </div>
+                <div className="price-item">
+                  <Check size={16} /> Real cash prizes
+                </div>
+                <div className="price-item">
+                  <Check size={16} /> Live leaderboard
+                </div>
+                <div className="price-item">
+                  <Check size={16} /> Instant UPI payout
+                </div>
+              </div>
+              <button className="dark-btn">Play for ₹1</button>
+            </div>
+
+            <div className="price-card">
+              <div className="pill upcoming">Pro</div>
+              <div className="price-amount">
+                <strong>₹99</strong>
+                <span>/month</span>
+              </div>
+              <div className="price-list">
+                <div className="price-item">
+                  <Check size={16} /> Unlimited contests
+                </div>
+                <div className="price-item">
+                  <Check size={16} /> Higher prize pools
+                </div>
+                <div className="price-item">
+                  <Check size={16} /> Mock test series
+                </div>
+              </div>
+              <button className="card-btn">Go Pro</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ backgroundColor: "#f8fafc" }}>
+        <div className="section-inner">
+          <div className="center-head">
+            <h2 style={{ color: "#0d1f3c", fontSize: "36px" }}>All exams. One arena.</h2>
+            <div className="subtext" style={{ color: "#64748b" }}>
+              Practice & compete for every major exam in India
+            </div>
+          </div>
+          <div className="tags" style={{ marginTop: "24px" }}>
             <span className="tag">UPSC</span>
             <span className="tag">SSC CGL</span>
             <span className="tag">NEET</span>
             <span className="tag">JEE</span>
             <span className="tag">Bank PO</span>
-            <span className="tag">Railway</span>
+            <span className="tag">Railway RRB</span>
             <span className="tag">GATE</span>
             <span className="tag">CAT</span>
-            <span className="tag">CLAT</span>
-            <span className="tag">CUET</span>
+            <span className="tag">NDA</span>
+            <span className="tag">& more</span>
+          </div>
+
+          <div className="hero-phone" style={{ marginTop: "40px", maxWidth: "480px" }}>
+            <div className="hero-phone-inner">
+              <div className="row-between">
+                <div className="subtle" style={{ background: "rgba(56, 189, 248, 0.1)", padding: "4px 10px", borderRadius: "8px" }}>SSC CGL — GK</div>
+                <div className="subtle">0:20</div>
+              </div>
+
+              <div className="mini-grid" style={{ margin: "16px 0" }}>
+                <div className="mini-item">
+                  <div className="label">Prize Pool</div>
+                  <div className="value">₹500</div>
+                </div>
+                <div className="mini-item">
+                  <div className="label">Entry</div>
+                  <div className="value">₹11</div>
+                </div>
+                <div className="mini-item">
+                  <div className="label">Players</div>
+                  <div className="value">46</div>
+                </div>
+              </div>
+
+              <div className="question-box">
+                <div className="white-title" style={{ marginBottom: "14px", fontSize: "16px" }}>Who is the Father of Indian Constitution?</div>
+                <div style={{ display: "grid", gap: "10px" }}>
+                  <div className="option" style={{ padding: "12px", fontSize: "14px" }}>
+                    <span className="alpha">A</span> Mahatma Gandhi
+                  </div>
+                  <div className="option correct" style={{ padding: "12px", fontSize: "14px" }}>
+                    <span className="alpha">B</span> Dr. B.R. Ambedkar ✓
+                  </div>
+                  <div className="option" style={{ padding: "12px", fontSize: "14px" }}>
+                    <span className="alpha">C</span> Jawaharlal Nehru
+                  </div>
+                  <div className="option" style={{ padding: "12px", fontSize: "14px" }}>
+                    <span className="alpha">D</span> Sardar Patel
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -631,14 +804,13 @@ export default function LandingPage() {
           <div className="badge" style={{ marginBottom: "12px" }}>
             Early access
           </div>
-          <h2 style={{ color: "white" }}>Ready to launch your next quiz?</h2>
+          <h2 style={{ color: "white" }}>Ready to earn from what you learn?</h2>
           <p>
-            A cleaner mobile-first preview for QUZO with app-like sections, contest cards, and safer positioning around
-            quiz participation and rewards.
+            Join 50,000+ aspirants already winning on QUZO
           </p>
           <div className="cta-form">
-            <input type="text" placeholder="Enter mobile number" />
-            <button className="primary-btn">Get Started</button>
+            <input type="text" placeholder="Enter your mobile number" />
+            <button className="primary-btn">Get Early Access</button>
           </div>
         </div>
       </section>
@@ -656,6 +828,31 @@ export default function LandingPage() {
         </p>
         <p>© 2026 QUZO. All rights reserved.</p>
       </footer>
+
+      <div className="sticky-bottom-nav">
+        <div className="bottom-nav-inner">
+          <div className="nav-item active">
+            <Home size={20} />
+            <span>Home</span>
+          </div>
+          <div className="nav-item">
+            <Trophy size={20} />
+            <span>Live</span>
+          </div>
+          <div className="nav-item">
+            <Wallet size={20} />
+            <span>Rewards</span>
+          </div>
+          <div className="nav-item">
+            <BarChart3 size={20} />
+            <span>Ranks</span>
+          </div>
+          <div className="nav-item" onClick={handleOpenLogin}>
+            <User size={20} />
+            <span>Profile</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
