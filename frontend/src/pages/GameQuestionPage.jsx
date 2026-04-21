@@ -1,35 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Save, Clock, HelpCircle, UserCheck } from 'lucide-react';
-import TimerBar from '../components/TimerBar';
+import { ChevronLeft, Save, ShieldCheck, Trophy, Users, HelpCircle, CheckCircle2, Clock } from 'lucide-react';
 
 const mockGameQuestions = [
   {
     id: 1,
-    type: 'winner',
-    text: "Who will win the match?",
-    options: ["Mumbai Indians", "Chennai Super Kings"],
+    text: "Who is known as the \"Father of Indian Constitution\"?",
+    options: ["Mahatma Gandhi", "Dr. B.R. Ambedkar", "Jawaharlal Nehru", "Sardar Patel"],
+    correctOption: 1,
     points: 50
   },
   {
     id: 2,
-    type: 'player',
-    text: "Select your Captain (2x points)",
-    options: ["Rohit Sharma", "MS Dhoni", "Jasprit Bumrah", "Ravindra Jadeja"],
-    points: 100
+    text: "Which planet is known as the Red Planet?",
+    options: ["Venus", "Mars", "Jupiter", "Saturn"],
+    correctOption: 1,
+    points: 50
   },
   {
     id: 3,
-    type: 'stat',
-    text: "Who will hit the most sixes?",
-    options: ["Suryakumar Yadav", "Shivam Dube", "Tim David", "Ruturaj Gaikwad"],
-    points: 75
-  },
-  {
-    id: 4,
-    type: 'stat',
-    text: "Total wickets for Jasprit Bumrah?",
-    options: ["0", "1", "2", "3+"],
+    text: "What is the capital of France?",
+    options: ["Berlin", "London", "Paris", "Madrid"],
+    correctOption: 2,
     points: 50
   }
 ];
@@ -39,228 +31,340 @@ const GameQuestionPage = () => {
   const navigate = useNavigate();
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selections, setSelections] = useState({});
-  const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showReview, setShowReview] = useState(false);
+  const [questions, setQuestions] = useState(mockGameQuestions);
+  const [loading, setLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(18); // 0:18 as per image
 
   useEffect(() => {
-    fetch(`/api/matches/${id}/quiz`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.success && data.questions.length > 0) {
-          // Map backend questions to match frontend format
-          const qs = data.questions.map(q => ({
-            id: q.id,
-            type: q.type || 'stat', // default to stat if type is missing
-            text: q.question_text,
-            options: ["Option A", "Option B", "Option C", "Option D"], // Placeholder if options are missing
-            points: q.marks || 10
-          }));
-          setQuestions(qs);
-        } else {
-          // Fallback to mock if no questions
-          setQuestions(mockGameQuestions);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        setQuestions(mockGameQuestions);
-      })
-      .finally(() => setLoading(false));
-  }, [id]);
+    const timer = setInterval(() => {
+      setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
-  const handleNext = () => {
-    if (currentIdx < questions.length - 1) {
-      setCurrentIdx(currentIdx + 1);
-    } else {
-      setShowReview(true);
-    }
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const userMobile = localStorage.getItem('user_mobile') || '0000000000';
-      const response = await fetch(`/api/quizzes/${questions[0]?.quiz_id || id}/submit`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: selections, mobile: userMobile })
-      });
-      const data = await response.json();
-      if (data.success) {
+  const handleOptionSelect = (idx) => {
+    setSelections({ ...selections, [currentIdx]: idx });
+    // Auto next after selection for demo purposes or wait for next button
+    setTimeout(() => {
+      if (currentIdx < questions.length - 1) {
+        setCurrentIdx(currentIdx + 1);
+      } else {
         navigate(`/game-result/${id}`);
       }
-    } catch (err) {
-      console.error(err);
-    }
+    }, 800);
   };
 
-  if (loading) return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading Arena...</div>;
-
-  if (showReview) {
-    return (
-      <div className="mesh-bg-blue" style={{ minHeight: '100vh', background: 'white' }}>
-        <div className="container" style={{ paddingTop: '2rem', paddingBottom: '3rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '3rem' }}>
-            <button className="flex-center" onClick={() => setShowReview(false)} style={{ width: '48px', height: '48px', background: 'hsl(var(--muted))', borderRadius: '1rem', border: '1px solid hsl(var(--card-border))' }}>
-              <ChevronLeft size={24} />
-            </button>
-            <h1 style={{ fontSize: '2rem', fontWeight: 900 }}>Final Review</h1>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
-            {questions.map((q, i) => (
-              <div key={i} className="bento-card" style={{ padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <p style={{ fontSize: '0.75rem', fontWeight: 800, color: 'hsl(var(--muted-foreground))' }}>{q.text}</p>
-                  <p style={{ fontSize: '1.1rem', fontWeight: 900 }}>{selections[i] !== undefined ? q.options[selections[i]] : 'NOT SELECTED'}</p>
-                </div>
-                <button onClick={() => { setShowReview(false); setCurrentIdx(i); }} style={{ color: 'hsl(var(--secondary))', fontWeight: 800, border: 'none', background: 'none', cursor: 'pointer' }}>Edit</button>
-              </div>
-            ))}
-          </div>
-
-          <button className="btn-elite btn-elite-primary" style={{ width: '100%', height: '72px', fontSize: '1.2rem', background: 'linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary)))' }} onClick={handleSubmit}>
-            Lock Predictions <Save size={24} style={{ marginLeft: '1rem' }} />
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   const currentQ = questions[currentIdx];
+  const progress = ((currentIdx + 1) / questions.length) * 100;
 
   return (
-    <div className="mesh-bg-blue" style={{ minHeight: '100vh', background: 'white' }}>
-      <div className="container" style={{ paddingTop: '2rem', paddingBottom: '3rem', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        {/* Dynamic Cyber Purple Glow */}
-        <div style={{ position: 'absolute', top: '10%', right: '5%', width: '250px', height: '250px', background: 'hsl(var(--secondary) / 0.05)', filter: 'blur(80px)', borderRadius: '50%' }}></div>
-
-        {/* Header: Pro Gaming Style */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
-          <button className="flex-center" onClick={() => navigate(-1)} style={{ width: '48px', height: '48px', color: 'hsl(var(--foreground))', background: 'hsl(var(--muted))', borderRadius: '1rem', border: '1px solid hsl(var(--card-border))' }}>
-            <ChevronLeft size={24} />
-          </button>
-          <span style={{ fontSize: '1.1rem', fontWeight: 900, fontFamily: 'Lexend', color: 'hsl(var(--muted-foreground))', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
-            Prediction Hub
-          </span>
-          <button className="flex-center" style={{ width: '48px', height: '48px', background: 'hsl(var(--muted))', borderRadius: '1rem', border: '1px solid hsl(var(--card-border))', color: 'hsl(var(--foreground))' }} onClick={() => setShowReview(true)}>
-             <Save size={20} />
-          </button>
-        </div>
-
-        {/* Modular Timer */}
-        <div style={{ marginBottom: '3rem', maxWidth: '800px' }}>
-          <TimerBar timeLeft={5045} totalTime={7200} formatTime={(s) => "01:24:05"} />
-        </div>
-
-        {/* Segmented Progress: Hub Style */}
-        <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '3.5rem', maxWidth: '800px' }}>
-          {questions.map((_, i) => (
-            <div key={i} style={{ 
-              flex: 1, 
-              height: '8px', 
-              background: i <= currentIdx ? 'linear-gradient(90deg, hsl(var(--secondary)), hsl(var(--primary)))' : 'hsl(var(--muted))',
-              borderRadius: '10px',
-              boxShadow: i <= currentIdx ? '0 0 10px hsl(var(--secondary) / 0.3)' : 'none',
-              transition: 'all 0.5s ease'
-            }}></div>
-          ))}
-        </div>
-
-        {/* Prediction Arena Area */}
-        <div className="animate-elite" key={currentIdx} style={{ flex: 1, maxWidth: '1000px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-            <div style={{ height: '1.5rem', width: '4px', background: 'hsl(var(--secondary))', borderRadius: '4px' }}></div>
-            <span style={{ fontWeight: 900, fontSize: '0.9rem', color: 'hsl(var(--secondary))', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
-              {currentQ.type} System <span style={{ color: 'hsl(var(--muted-foreground))' }}>• {currentQ.points} PTS</span>
-            </span>
+    <div className="quiz-arena white-theme">
+      <div className="arena-container animate-fade-in">
+        
+        {/* Top Navigation Bar */}
+        <div className="arena-header">
+          <div className="category-badge">
+            SSC CGL — GK
           </div>
-          
-          <h2 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', marginBottom: '3.5rem', lineHeight: '1.25', fontWeight: 900, fontFamily: 'Lexend', color: 'hsl(var(--foreground))' }}>
-            {currentQ.text}
-          </h2>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(260px, 45%, 480px), 1fr))', gap: '1.5rem' }}>
-            {currentQ.options.map((opt, i) => {
-               const isSelected = selections[currentIdx] === i;
-               return (
-                <button 
-                  key={i}
-                  onClick={() => setSelections({ ...selections, [currentIdx]: i })}
-                  className="bento-card"
-                  style={{
-                    padding: 'clamp(2rem, 5vw, 3rem) 1.5rem',
-                    textAlign: 'center',
-                    border: isSelected ? '1px solid hsl(var(--secondary) / 0.3)' : '1px solid hsl(var(--card-border))',
-                    background: isSelected ? 'hsl(var(--secondary) / 0.05)' : 'white',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '2rem',
-                    boxShadow: isSelected ? '0 20px 40px -10px hsl(var(--secondary) / 0.2)' : 'none',
-                    transform: isSelected ? 'scale(1.03)' : 'scale(1)',
-                    transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {currentQ.type === 'player' && (
-                    <div style={{ 
-                      width: 'clamp(60px, 10vw, 90px)', 
-                      height: 'clamp(60px, 10vw, 90px)', 
-                      borderRadius: '2.5rem', 
-                      background: isSelected ? 'hsl(var(--secondary))' : 'hsl(var(--muted))', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-                      fontWeight: 900,
-                      color: isSelected ? 'white' : 'hsl(var(--foreground))',
-                      border: '1px solid hsl(var(--card-border))',
-                      boxShadow: isSelected ? '0 10px 20px rgba(0,0,0,0.1)' : 'none',
-                      fontFamily: 'Lexend'
-                    }}>
-                      {opt.charAt(0)}
-                    </div>
-                  )}
-                  <span style={{ fontWeight: 800, fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: isSelected ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))' }}>{opt}</span>
-                </button>
-               );
-            })}
+          <div className="timer-display">
+            <Clock size={16} /> {formatTime(timeLeft)}
           </div>
         </div>
 
-        {/* Control Stack */}
-        <div style={{ marginTop: '4rem', display: 'flex', gap: '1.5rem', maxWidth: '600px', width: '100%' }}>
-          <button 
-            className="btn-elite" 
-            disabled={currentIdx === 0}
-            onClick={() => setCurrentIdx(currentIdx - 1)}
-            style={{ 
-              flex: 1, 
-              height: '64px',
-              padding: '1rem',
-              background: 'hsl(var(--muted))', 
-              border: '1px solid hsl(var(--card-border))',
-              color: 'hsl(var(--foreground))',
-              opacity: currentIdx === 0 ? 0.3 : 1
-            }}
-          >
-            Previous
-          </button>
-          <button 
-            className="btn-elite btn-elite-primary" 
-            onClick={handleNext}
-            style={{ 
-              flex: 2, 
-              height: '64px',
-              background: 'linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary)))',
-              boxShadow: '0 20px 40px -10px hsl(var(--secondary) / 0.3)'
-            }}
-          >
-            {currentIdx === questions.length - 1 ? 'Review Predictions' : 'Save & Next'}
+        {/* Segmented Progress Bar */}
+        <div className="progress-track">
+          <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+        </div>
+
+        {/* Summary Card */}
+        <div className="summary-card">
+          <div className="summary-item">
+            <span className="label">Prize</span>
+            <span className="value">₹500</span>
+          </div>
+          <div className="summary-item">
+            <span className="label">Players</span>
+            <span className="value">46</span>
+          </div>
+          <div className="summary-item">
+            <span className="label">Q</span>
+            <span className="value">{currentIdx + 1}/{questions.length}</span>
+          </div>
+        </div>
+
+        {/* Question Area */}
+        <div className="question-box">
+          <div className="question-number-label">QUESTION {currentIdx + 1}</div>
+          <h2 className="question-text">{currentQ.text}</h2>
+        </div>
+
+        {/* Options Grid */}
+        <div className="options-stack">
+          {currentQ.options.map((opt, i) => {
+            const isSelected = selections[currentIdx] === i;
+            const label = String.fromCharCode(65 + i); // A, B, C, D
+            return (
+              <button 
+                key={i}
+                className={`option-card ${isSelected ? 'selected' : ''}`}
+                onClick={() => handleOptionSelect(i)}
+              >
+                <div className="option-indicator">{label}</div>
+                <span className="option-content">{opt}</span>
+                {isSelected && <CheckCircle2 size={22} className="check-icon" />}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Action Button */}
+        <div className="arena-actions">
+          <button className="save-join-btn" onClick={() => navigate(`/game-result/${id}`)}>
+            Save and Join
           </button>
         </div>
+
       </div>
+
+      <style>{`
+        .quiz-arena.white-theme {
+          min-height: 100vh;
+          background: #f1f5f9;
+          color: #0d121f;
+          padding: 24px 16px 80px;
+          font-family: 'Outfit', 'Inter', sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .arena-container {
+          width: 100%;
+          max-width: 460px;
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
+        }
+
+        .arena-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 4px;
+        }
+
+        .category-badge {
+          background: #e0f2fe;
+          color: #0369a1;
+          padding: 8px 16px;
+          border-radius: 999px;
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 0.02em;
+        }
+
+        .timer-display {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 18px;
+          font-weight: 800;
+          color: #64748b;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .progress-track {
+          width: 100%;
+          height: 6px;
+          background: #e2e8f0;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+
+        .progress-fill {
+          height: 100%;
+          background: #404eed;
+          transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .summary-card {
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 28px;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          padding: 24px 12px;
+          text-align: center;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03);
+        }
+
+        .summary-item {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .summary-item:not(:last-child) {
+          border-right: 1px solid #f1f5f9;
+        }
+
+        .summary-item .label {
+          font-size: 11px;
+          font-weight: 800;
+          color: #94a3b8;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+        }
+
+        .summary-item .value {
+          font-size: 24px;
+          font-weight: 900;
+          color: #0f172a;
+        }
+
+        .question-box {
+          background: white;
+          border: 1px solid #e2e8f0;
+          padding: 32px 24px;
+          border-radius: 28px;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .question-number-label {
+          font-size: 11px;
+          font-weight: 800;
+          color: #404eed;
+          background: #f1f5f9;
+          padding: 4px 12px;
+          border-radius: 999px;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+
+        .question-text {
+          font-size: 24px;
+          font-weight: 850;
+          color: #0f172a;
+          line-height: 1.35;
+          text-align: center;
+        }
+
+        .options-stack {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .option-card {
+          background: white;
+          border: 1px solid #e2e8f0;
+          border-radius: 20px;
+          padding: 18px 24px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          text-align: left;
+          width: 100%;
+          color: #0f172a;
+          position: relative;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .option-card:hover {
+          border-color: #cbd5e1;
+          transform: translateY(-2px);
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-card.selected {
+          background: rgba(16, 185, 129, 0.05);
+          border-color: #10b981;
+          box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.1);
+        }
+
+        .option-indicator {
+          width: 32px;
+          height: 32px;
+          background: #f1f5f9;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+          font-weight: 800;
+          color: #404eed;
+          flex-shrink: 0;
+          transition: all 0.2s;
+        }
+
+        .option-card.selected .option-indicator {
+          background: #10b981;
+          color: white;
+        }
+
+        .option-content {
+          font-size: 17px;
+          font-weight: 700;
+          flex: 1;
+        }
+
+        .check-icon {
+          color: #10b981;
+        }
+
+        .arena-actions {
+          margin-top: 10px;
+        }
+
+        .save-join-btn {
+          width: 100%;
+          background: #404eed;
+          color: white;
+          border: none;
+          padding: 20px;
+          border-radius: 20px;
+          font-size: 18px;
+          font-weight: 800;
+          cursor: pointer;
+          transition: all 0.3s;
+          box-shadow: 0 10px 20px -5px rgba(64, 78, 237, 0.3);
+        }
+
+        .save-join-btn:hover {
+          background: #3641c8;
+          transform: translateY(-2px);
+          box-shadow: 0 15px 30px -10px rgba(64, 78, 237, 0.4);
+        }
+
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
+        }
+
+        @media (max-width: 480px) {
+          .arena-container { gap: 20px; }
+          .question-text { font-size: 21px; }
+          .summary-item .value { font-size: 20px; }
+          .option-card { padding: 16px 20px; }
+          .save-join-btn { padding: 18px; font-size: 16px; }
+        }
+      `}</style>
     </div>
   );
 };

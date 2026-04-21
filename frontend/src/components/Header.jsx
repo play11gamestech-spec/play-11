@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Home, BookOpen, Trophy, History, User, LogOut } from 'lucide-react';
-import logo from '../assets/logo-play11.png';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const mobile = localStorage.getItem('user_mobile');
+  const mobileNumber = localStorage.getItem('user_mobile');
+  const userName = localStorage.getItem('user_name');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -17,10 +17,10 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', path: '/home-choice', icon: <Home size={20} /> },
-    { name: 'Study Zone', path: '/study-home', icon: <BookOpen size={20} /> },
-    { name: 'Game Zone', path: '/game-home', icon: <Trophy size={20} /> },
-    { name: 'History', path: '/history', icon: <History size={20} /> },
+    { name: 'Home', path: '/home-choice', icon: <Home size={18} /> },
+    { name: 'Study Zone', path: '/study-home', icon: <BookOpen size={18} /> },
+    { name: 'Game Zone', path: '/game-home', icon: <Trophy size={18} /> },
+    { name: 'History', path: '/history', icon: <History size={18} /> },
   ];
 
   const handleLogout = () => {
@@ -37,109 +37,99 @@ const Header = () => {
   return (
     <nav className={`site-header ${scrolled ? 'scrolled' : ''}`}>
       <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        {/* Logo */}
-        <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }} onClick={() => navigate('/home-choice')}>
-          <img src={logo} alt="Play11" style={{ height: '40px', width: 'auto' }} />
+        
+        {/* Logo - QUEZO Branding */}
+        <div className="logo-boxes" onClick={() => navigate('/home-choice')} style={{ cursor: 'pointer' }}>
+          <div className="logo-box">Q</div>
+          <div className="logo-box">U</div>
+          <div className="logo-box">E</div>
+          <div className="logo-box">Z</div>
+          <div className="logo-box">O</div>
         </div>
 
         {/* Desktop Nav */}
-        <div className="desktop-nav" style={{ display: 'none', alignItems: 'center', gap: '2rem' }}>
+        <div className="desktop-nav" style={{ display: 'none' }}>
           {navItems.map(item => (
             <button
               key={item.path}
               onClick={() => navigate(item.path)}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                fontWeight: isActive(item.path) ? 900 : 600,
-                fontSize: '0.9rem',
-                color: isActive(item.path) ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground))',
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem'
-              }}
+              className={`nav-link-btn ${isActive(item.path) ? 'active' : ''}`}
             >
               {item.name}
-              {isActive(item.path) && <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'currentColor' }} />}
             </button>
           ))}
           
-          <div style={{ width: '1px', height: '24px', background: 'rgba(0,0,0,0.1)', margin: '0 0.5rem' }}></div>
+          <div style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)', margin: '0 0.5rem' }}></div>
           
-          {mobile ? (
-            <>
+          {mobileNumber ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
               <button 
                 onClick={() => navigate('/profile')}
-                className="flex-center glass-card hover-lift"
-                style={{ padding: '0.5rem 1rem', gap: '0.75rem', borderRadius: '1rem', background: 'white', border: '1px solid rgba(0,0,0,0.05)', transition: 'all 0.3s' }}
+                className="user-profile-btn"
               >
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))' }} className="flex-center">
-                  <User size={18} color="white" />
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #1d4ed8)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <User size={14} color="white" />
                 </div>
-                <span style={{ fontWeight: 800, fontSize: '0.85rem' }}>{localStorage.getItem('user_name') || `+91 ${mobile}`}</span>
+                <span style={{ fontWeight: 800, fontSize: '0.8rem' }}>{userName || `+91 ${mobileNumber.slice(-10)}`}</span>
               </button>
               <button 
                 onClick={handleLogout}
-                className="flex-center glass-card hover-lift"
-                style={{ width: '48px', height: '48px', borderRadius: '1rem', background: 'rgba(239, 68, 68, 0.05)', color: '#ef4444', border: '1px solid rgba(239, 68, 68, 0.1)', transition: 'all 0.3s' }}
+                className="logout-btn-header"
                 title="Logout"
               >
-                <LogOut size={20} />
+                <LogOut size={18} />
               </button>
-            </>
+            </div>
           ) : (
-            <button onClick={() => navigate('/login')} className="morphism-button" style={{ padding: '0.75rem 1.5rem', height: 'auto', fontSize: '0.85rem' }}>
-              Access Arena
+            <button onClick={() => navigate('/login')} className="primary-btn" style={{ padding: '8px 20px', borderRadius: '12px', fontSize: '13px' }}>
+              Login
             </button>
           )}
         </div>
 
         {/* Mobile Hamburger Toggle */}
         <button 
-          className="mobile-toggle flex-center" 
+          className="menu-toggle" 
           onClick={() => setIsOpen(!isOpen)}
-          style={{ background: 'none', border: 'none', color: 'hsl(var(--foreground))', cursor: 'pointer' }}
+          style={{ display: 'block', background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}
         >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Menu Backdrop */}
       {isOpen && (
         <div 
-          className="animate-slide-up"
+          className="mobile-nav-overlay"
           style={{ 
             position: 'fixed', 
-            top: '80px', 
+            top: '70px', 
             left: 0, 
             right: 0, 
             bottom: 0, 
-            background: 'rgba(255,255,255,0.98)', 
-            backdropFilter: 'blur(30px)',
+            background: 'rgba(13, 31, 60, 0.98)', 
+            backdropFilter: 'blur(20px)',
             zIndex: 999,
             padding: '2rem'
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {navItems.map(item => (
               <button
                 key={item.path}
                 onClick={() => { navigate(item.path); setIsOpen(false); }}
                 style={{
-                  background: isActive(item.path) ? 'white' : 'transparent',
-                  border: isActive(item.path) ? '1px solid rgba(0,0,0,0.05)' : 'none',
-                  padding: '1.25rem',
-                  borderRadius: '1.25rem',
+                  background: isActive(item.path) ? 'rgba(56, 189, 248, 0.1)' : 'transparent',
+                  border: 'none',
+                  padding: '1rem',
+                  borderRadius: '1rem',
                   textAlign: 'left',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '1rem',
-                  fontSize: '1.1rem',
+                  fontSize: '1rem',
                   fontWeight: 800,
-                  color: isActive(item.path) ? 'hsl(var(--primary))' : 'hsl(var(--foreground))',
-                  boxShadow: isActive(item.path) ? '0 10px 20px rgba(0,0,0,0.05)' : 'none'
+                  color: isActive(item.path) ? '#38bdf8' : 'white'
                 }}
               >
                  {item.icon}
@@ -147,39 +137,40 @@ const Header = () => {
               </button>
             ))}
             
-            <hr style={{ border: 'none', height: '1px', background: 'rgba(0,0,0,0.05)', margin: '1rem 0' }} />
+            <hr style={{ border: 'none', height: '1px', background: 'rgba(255,255,255,0.05)', margin: '0.5rem 0' }} />
             
             <button
               onClick={() => { navigate('/profile'); setIsOpen(false); }}
               style={{
-                background: 'white',
-                border: '1px solid rgba(0,0,0,0.05)',
-                padding: '1.25rem',
-                borderRadius: '1.25rem',
+                background: 'rgba(255,255,255,0.03)',
+                border: 'none',
+                padding: '1rem',
+                borderRadius: '1rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '1rem',
-                fontSize: '1.1rem',
-                fontWeight: 800
+                fontSize: '1rem',
+                fontWeight: 800,
+                color: 'white'
               }}
             >
-               <User size={20} /> Profile Arena
+               <User size={20} /> Profile
             </button>
             
             <button
               onClick={handleLogout}
               style={{
-                padding: '1.25rem',
-                borderRadius: '1.25rem',
+                padding: '1rem',
+                borderRadius: '1rem',
                 textAlign: 'center',
                 fontSize: '1rem',
                 fontWeight: 800,
-                color: '#ef4444',
+                color: '#f87171',
                 background: 'rgba(239, 68, 68, 0.05)',
                 border: '1px solid rgba(239, 68, 68, 0.1)'
               }}
             >
-               Logout from Session
+               Logout
             </button>
           </div>
         </div>
@@ -188,7 +179,7 @@ const Header = () => {
       <style>{`
         @media (min-width: 1024px) {
           .desktop-nav { display: flex !important; }
-          .mobile-toggle { display: none !important; }
+          .menu-toggle { display: none !important; }
         }
       `}</style>
     </nav>

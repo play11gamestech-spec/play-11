@@ -94,7 +94,7 @@ export default function LandingPage() {
               India's Smartest Quiz Arena — compete in real quiz battles, rank higher, win real prizes.
             </p>
             <div className="hero-actions">
-              <button className="primary-btn">Join Quiz</button>
+              <button className="primary-btn" onClick={() => navigate("/contests")}>Join Quiz</button>
               <button className="secondary-btn">Watch Demo</button>
             </div>
             <div className="stats-row">
@@ -123,7 +123,7 @@ export default function LandingPage() {
         <div className="section-inner">
           <div className="center-head">
             <div className="eyebrow">Steps</div>
-            <h2>Earn from what you learn.</h2>
+            <h2>How to join</h2>
             <div className="subtext">
               Join live quizzes, compete with others, and prove your knowledge under real-time pressure.
             </div>
@@ -328,7 +328,7 @@ export default function LandingPage() {
                   <strong>43/100 joined</strong>
                 </div>
               </div>
-              <button className="card-btn">View Upcoming Quiz</button>
+              <button className="card-btn" onClick={() => navigate("/contests")}>View Upcoming Quiz</button>
             </div>
 
             <div className="contest-card featured">
@@ -360,7 +360,7 @@ export default function LandingPage() {
                   <strong>78/100 joined</strong>
                 </div>
               </div>
-              <button className="dark-btn">Join Live Quiz</button>
+              <button className="dark-btn" onClick={() => navigate("/contests")}>Join Live Quiz</button>
             </div>
 
             <div className="contest-card">
@@ -507,7 +507,7 @@ export default function LandingPage() {
                       <strong>56 joined</strong>
                     </div>
                   </div>
-                  <button className="dark-btn">View Quiz Details</button>
+                  <button className="dark-btn" onClick={() => navigate("/contests")}>View Quiz Details</button>
                 </div>
 
                 <div className="quiz-item">
@@ -537,7 +537,7 @@ export default function LandingPage() {
                       <strong>92 joined</strong>
                     </div>
                   </div>
-                  <button className="dark-btn">View Quiz Details</button>
+                  <button className="dark-btn" onClick={() => navigate("/contests")}>View Quiz Details</button>
                 </div>
 
                 <div className="quiz-item">
@@ -567,7 +567,7 @@ export default function LandingPage() {
                       <strong>38 joined</strong>
                     </div>
                   </div>
-                  <button className="dark-btn">View Quiz Details</button>
+                  <button className="dark-btn" onClick={() => navigate("/contests")}>View Quiz Details</button>
                 </div>
               </div>
             </div>

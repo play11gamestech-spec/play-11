@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, Mail, Phone, MessageSquare, Globe, ArrowRight } from 'lucide-react';
-import logo from '../assets/logo-play11.png';
+import { Sparkles, Mail, Phone, MessageSquare, Globe } from 'lucide-react';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -13,20 +12,26 @@ const Footer = () => {
         <div className="footer-grid">
           {/* Brand Info */}
           <div className="footer-brand">
-            <img src={logo} alt="Play11" style={{ height: '44px', width: 'auto', marginBottom: '1.5rem' }} />
-            <p style={{ color: 'hsl(var(--muted-foreground))', fontWeight: 600, fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '2rem' }}>
+            <div className="logo-boxes" onClick={() => navigate('/')} style={{ cursor: 'pointer', marginBottom: '1.25rem' }}>
+              <div className="logo-box">Q</div>
+              <div className="logo-box">U</div>
+              <div className="logo-box">E</div>
+              <div className="logo-box">Z</div>
+              <div className="logo-box">O</div>
+            </div>
+            <p className="footer-desc">
               The ultimate platform where knowledge meets competition. Master your academic goals and sports predictions in one elite arena.
             </p>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-               <button className="social-icon flex-center"><Mail size={20} /></button>
-               <button className="social-icon flex-center"><Phone size={20} /></button>
-               <button className="social-icon flex-center"><MessageSquare size={20} /></button>
-               <button className="social-icon flex-center"><Globe size={20} /></button>
+            <div className="social-row">
+               <button className="social-icon-btn"><Mail size={18} /></button>
+               <button className="social-icon-btn"><Phone size={18} /></button>
+               <button className="social-icon-btn"><MessageSquare size={18} /></button>
+               <button className="social-icon-btn"><Globe size={18} /></button>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="footer-links">
+          <div className="footer-links-col">
             <h4>Explore Zones</h4>
             <ul>
               <li onClick={() => navigate('/study-home')}>Study Arena</li>
@@ -36,7 +41,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="footer-links">
+          <div className="footer-links-col">
              <h4>Your Profile</h4>
              <ul>
                <li onClick={() => navigate('/profile')}>Personal Stats</li>
@@ -46,10 +51,10 @@ const Footer = () => {
              </ul>
           </div>
 
-          <div className="footer-links">
+          <div className="footer-links-col">
              <h4>Company</h4>
              <ul>
-               <li>About Play11</li>
+               <li>About QUEZO</li>
                <li>Privacy Policy</li>
                <li>Terms of Use</li>
                <li>Partner With Us</li>
@@ -57,81 +62,122 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="footer-bottom">
-           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'hsl(var(--muted-foreground))', fontWeight: 700, fontSize: '0.85rem' }}>
-              <div className="flex-center" style={{ width: '24px', height: '24px', background: 'hsla(var(--primary), 0.1)', color: 'hsl(var(--primary))', borderRadius: '50%' }}>
-                 <Sparkles size={12} fill="currentColor" />
-              </div>
-              © {year} Play11 Global Arena. All Rights Reserved.
-           </div>
-           <div style={{ display: 'flex', gap: '2rem', fontSize: '0.85rem', fontWeight: 700, color: 'hsl(var(--muted-foreground))' }}>
-              <span>Secure Connection</span>
-              <span>v2.0.4 Premium</span>
-           </div>
+        <div className="footer-bottom-bar">
+            <div className="copyright-flex">
+               <div className="spark-circle">
+                  <Sparkles size={10} fill="currentColor" />
+               </div>
+               <span>© {year} QUEZO Global Arena. All Rights Reserved.</span>
+            </div>
+            <div className="footer-info-tags">
+               <span>Secure Connection</span>
+               <span>v2.0.4 Premium</span>
+            </div>
         </div>
       </div>
 
       <style>{`
         .site-footer {
-          background: rgba(255, 255, 255, 0.5);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border-top: 1px solid rgba(255, 255, 255, 0.5);
-          padding: 5rem 0 3rem;
-          margin-top: 5rem;
+          background: #020617; /* Deep Black */
+          color: #94a3b8;
+          padding: 3.5rem 0 2rem;
+          margin-top: 0;
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
+        
         .footer-grid {
           display: grid;
-          gap: 3rem;
+          gap: 2.5rem;
           grid-template-columns: 1.5fr repeat(3, 1fr);
-          margin-bottom: 4rem;
+          margin-bottom: 3rem;
         }
+
+        .footer-brand .footer-desc {
+          color: #64748b;
+          font-weight: 500;
+          font-size: 0.9rem;
+          line-height: 1.6;
+          margin-bottom: 1.5rem;
+          max-width: 320px;
+        }
+
+        .social-row { display: flex; gap: 0.75rem; }
+
+        .social-icon-btn {
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          color: #94a3b8;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .social-icon-btn:hover { 
+          background: rgba(255, 255, 255, 0.08);
+          color: #38bdf8;
+          transform: translateY(-3px);
+        }
+
+        .footer-links-col h4 {
+          font-size: 0.95rem;
+          font-weight: 800;
+          margin-bottom: 1.25rem;
+          color: #f8fafc;
+          letter-spacing: 0.02em;
+        }
+
+        .footer-links-col ul { list-style: none; padding: 0; margin: 0; }
+        
+        .footer-links-col li {
+          color: #64748b;
+          font-weight: 600;
+          font-size: 0.85rem;
+          margin-bottom: 0.7rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .footer-links-col li:hover { color: #38bdf8; }
+
+        .footer-bottom-bar {
+          padding-top: 2rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 1rem;
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: #475569;
+        }
+
+        .copyright-flex { display: flex; align-items: center; gap: 0.5rem; }
+        
+        .spark-circle {
+          width: 20px; height: 20px;
+          background: rgba(56, 189, 248, 0.1);
+          color: #38bdf8;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .footer-info-tags { display: flex; gap: 1.5rem; }
+
         @media (max-width: 1024px) {
           .footer-grid { grid-template-columns: 1fr 1fr; }
           .footer-brand { grid-column: 1 / -1; }
         }
         @media (max-width: 640px) {
-          .footer-grid { grid-template-columns: 1fr; }
-        }
-        .footer-links h4 {
-          font-family: 'Lexend', sans-serif;
-          font-size: 1.1rem;
-          font-weight: 800;
-          margin-bottom: 1.5rem;
-          color: hsl(var(--foreground));
-        }
-        .footer-links ul { list-style: none; }
-        .footer-links li {
-          color: hsl(var(--muted-foreground));
-          font-weight: 600;
-          font-size: 0.95rem;
-          margin-bottom: 0.75rem;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .footer-links li:hover { color: hsl(var(--primary)); padding-left: 5px; }
-        .social-icon {
-          width: 44px; height: 44px;
-          border-radius: 1rem;
-          background: white;
-          border: 1px solid rgba(0,0,0,0.05);
-          color: hsl(var(--muted-foreground));
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .social-icon:hover { 
-          transform: translateY(-4px); 
-          color: hsl(var(--primary));
-          box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
-        .footer-bottom {
-          padding-top: 2rem;
-          border-top: 1px solid rgba(0,0,0,0.05);
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 1.5rem;
+          .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+          .footer-bottom-bar { flex-direction: column; text-align: center; }
         }
       `}</style>
     </footer>
