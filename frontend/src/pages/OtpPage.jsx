@@ -72,6 +72,7 @@ const OtpPage = () => {
 
         localStorage.setItem('play11_session', data.token);
         localStorage.setItem('play11_user', JSON.stringify(data.user));
+        localStorage.setItem('play11_has_account', 'true');
         localStorage.setItem('user_mobile', mobile);
         
         if (data.isNewUser) {

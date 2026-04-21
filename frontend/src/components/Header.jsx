@@ -20,7 +20,6 @@ const Header = () => {
     { name: 'Home', path: '/home-choice', icon: <Home size={18} /> },
     { name: 'Study Zone', path: '/study-home', icon: <BookOpen size={18} /> },
     { name: 'Game Zone', path: '/game-home', icon: <Trophy size={18} /> },
-    { name: 'History', path: '/history', icon: <History size={18} /> },
   ];
 
   const handleLogout = () => {

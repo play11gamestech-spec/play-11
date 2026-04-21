@@ -51,6 +51,7 @@ const RegisterPage = () => {
         profession: formData.profession
       };
       localStorage.setItem('play11_user', JSON.stringify(userObj));
+      localStorage.setItem('play11_has_account', 'true');
       
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1500));

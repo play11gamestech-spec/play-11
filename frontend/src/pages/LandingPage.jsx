@@ -8,8 +8,13 @@ export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleJoinContest = () => {
-    if (localStorage.getItem("play11_user")) {
+    const isLoggedIn = !!localStorage.getItem("play11_user");
+    const hasAccount = localStorage.getItem("play11_has_account") === "true";
+
+    if (isLoggedIn) {
       navigate("/contests");
+    } else if (hasAccount) {
+      navigate("/login");
     } else {
       navigate("/register");
     }
