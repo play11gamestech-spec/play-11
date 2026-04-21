@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const contestsData = [
@@ -33,6 +33,13 @@ const contestsData = [
 
 export default function ContestListPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem("play11_user");
+    if (!user) {
+      navigate("/register");
+    }
+  }, [navigate]);
 
   return (
     <div className="contest-list-container" style={{ paddingTop: '100px' }}>

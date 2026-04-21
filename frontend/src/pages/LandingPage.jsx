@@ -4,8 +4,16 @@ import { Menu, X, Home, Trophy, Wallet, BarChart3, User, Check } from "lucide-re
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("play11_user"));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleJoinContest = () => {
+    if (localStorage.getItem("play11_user")) {
+      navigate("/contests");
+    } else {
+      navigate("/register");
+    }
+  };
 
   const handleOpenLogin = () => {
     navigate("/login");
@@ -65,15 +73,7 @@ export default function LandingPage() {
                   Login
                 </button>
               </>
-            ) : (
-              <div className="user-chip desktop-only" style={{ display: "flex" }}>
-                <div className="avatar">A</div>
-                <div>
-                  <div style={{ fontSize: "12px", fontWeight: "800" }}>Aman Kumar</div>
-                  <div style={{ fontSize: "11px", color: "#cbd5e1" }}>+91 98XXXXXX21</div>
-                </div>
-              </div>
-            )}
+            ) : null}
             
             <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -94,7 +94,7 @@ export default function LandingPage() {
               India's Smartest Quiz Arena — compete in real quiz battles, rank higher, win real prizes.
             </p>
             <div className="hero-actions">
-              <button className="primary-btn" onClick={() => navigate("/contests")}>Join Quiz</button>
+              <button className="primary-btn" onClick={handleJoinContest}>Join Quiz</button>
               <button className="secondary-btn">Watch Demo</button>
             </div>
             <div className="stats-row">
@@ -328,7 +328,7 @@ export default function LandingPage() {
                   <strong>43/100 joined</strong>
                 </div>
               </div>
-              <button className="card-btn" onClick={() => navigate("/contests")}>View Upcoming Quiz</button>
+              <button className="card-btn" onClick={handleJoinContest}>View Upcoming Quiz</button>
             </div>
 
             <div className="contest-card featured">
@@ -360,7 +360,7 @@ export default function LandingPage() {
                   <strong>78/100 joined</strong>
                 </div>
               </div>
-              <button className="dark-btn" onClick={() => navigate("/contests")}>Join Live Quiz</button>
+              <button className="dark-btn" onClick={handleJoinContest}>Join Live Quiz</button>
             </div>
 
             <div className="contest-card">
@@ -507,7 +507,7 @@ export default function LandingPage() {
                       <strong>56 joined</strong>
                     </div>
                   </div>
-                  <button className="dark-btn" onClick={() => navigate("/contests")}>View Quiz Details</button>
+                  <button className="dark-btn" onClick={handleJoinContest}>View Quiz Details</button>
                 </div>
 
                 <div className="quiz-item">
@@ -537,7 +537,7 @@ export default function LandingPage() {
                       <strong>92 joined</strong>
                     </div>
                   </div>
-                  <button className="dark-btn" onClick={() => navigate("/contests")}>View Quiz Details</button>
+                  <button className="dark-btn" onClick={handleJoinContest}>View Quiz Details</button>
                 </div>
 
                 <div className="quiz-item">
@@ -567,7 +567,7 @@ export default function LandingPage() {
                       <strong>38 joined</strong>
                     </div>
                   </div>
-                  <button className="dark-btn" onClick={() => navigate("/contests")}>View Quiz Details</button>
+                  <button className="dark-btn" onClick={handleJoinContest}>View Quiz Details</button>
                 </div>
               </div>
             </div>

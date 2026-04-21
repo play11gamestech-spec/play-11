@@ -44,14 +44,16 @@ const GameQuestionPage = () => {
 
   const handleOptionSelect = (idx) => {
     setSelections({ ...selections, [currentIdx]: idx });
-    // Auto next after selection for demo purposes or wait for next button
-    setTimeout(() => {
-      if (currentIdx < questions.length - 1) {
-        setCurrentIdx(currentIdx + 1);
-      } else {
-        navigate(`/game-result/${id}`);
-      }
-    }, 800);
+  };
+
+  const handleSaveAndNext = () => {
+    if (selections[currentIdx] === undefined) return;
+
+    if (currentIdx < questions.length - 1) {
+      setCurrentIdx(currentIdx + 1);
+    } else {
+      navigate(`/game-result/${id}`);
+    }
   };
 
   const formatTime = (seconds) => {
@@ -125,8 +127,13 @@ const GameQuestionPage = () => {
 
         {/* Action Button */}
         <div className="arena-actions">
-          <button className="save-join-btn" onClick={() => navigate(`/game-result/${id}`)}>
-            Save and Join
+          <button 
+            className="save-join-btn" 
+            onClick={handleSaveAndNext}
+            disabled={selections[currentIdx] === undefined}
+            style={{ opacity: selections[currentIdx] === undefined ? 0.6 : 1 }}
+          >
+            {currentIdx === questions.length - 1 ? 'Save and Join' : 'Save and Next'}
           </button>
         </div>
 
