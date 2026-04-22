@@ -3,17 +3,30 @@ import Header from './Header';
 import Footer from './Footer';
 import BottomNav from './BottomNav';
 
-const Layout = ({ children, hideNav = false }) => {
+const Layout = ({ children, hideHeader = false, hideFooter = false, hideBottomNav = false, hideNav = false }) => {
   if (hideNav) return <>{children}</>;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative' }}>
-      <Header />
-      <main className="main-content" style={{ flex: 1, paddingBottom: hideNav ? '0' : '80px' }}>
+    <div className="layout-wrapper" style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      minHeight: '100vh', 
+      position: 'relative',
+      background: '#f8fafc' // Matches the contest page background to eliminate navy gaps
+    }}>
+      {!hideHeader && <Header />}
+      
+      <main className="main-content" style={{ 
+        flex: 1, 
+        paddingBottom: hideBottomNav ? '0' : '80px',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
         {children}
       </main>
-      {!hideNav && <BottomNav />}
-      <Footer />
+
+      {!hideBottomNav && <BottomNav />}
+      {!hideFooter && <Footer />}
     </div>
   );
 };

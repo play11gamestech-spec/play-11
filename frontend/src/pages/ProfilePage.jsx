@@ -22,8 +22,9 @@ const ProfilePage = () => {
   ];
 
   return (
-    <div style={{ paddingBottom: '7rem' }}>
-      <div className="container" style={{ paddingTop: '6.5rem' }}>
+    <div className="luminescent-theme min-h-screen" style={{ paddingBottom: '7rem' }}>
+      <div className="cyber-grid"></div>
+      <div className="container relative z-10" style={{ paddingTop: '6.5rem' }}>
         
         {/* Website Profile Header Section */}
         <div className="profile-header-container" style={{ 
@@ -39,9 +40,9 @@ const ProfilePage = () => {
               width: '100%', 
               height: '100%', 
               borderRadius: '2.5rem', 
-              background: 'white', 
-              border: '1px solid rgba(0,0,0,0.03)',
-              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.08)',
+              background: 'rgba(255,255,255,0.05)', 
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.4)',
               position: 'relative',
               zIndex: 2
             }}>
@@ -55,7 +56,7 @@ const ProfilePage = () => {
               borderRadius: '3rem',
               zIndex: 1
             }}></div>
-            <div className="flex-center" style={{ position: 'absolute', bottom: '15px', right: '5px', background: '#10b981', border: '6px solid #f8f9fa', width: '42px', height: '42px', borderRadius: '1.2rem', color: 'white', zIndex: 3, boxShadow: '0 8px 16px rgba(16, 185, 129, 0.2)' }}>
+            <div className="flex-center" style={{ position: 'absolute', bottom: '15px', right: '5px', background: '#10b981', border: '6px solid #020617', width: '42px', height: '42px', borderRadius: '1.2rem', color: 'white', zIndex: 3, boxShadow: '0 8px 16px rgba(16, 185, 129, 0.2)' }}>
                <div style={{ width: '8px', height: '8px', background: 'white', borderRadius: '50%', animation: 'pulse-green 1.5s infinite' }}></div>
             </div>
           </div>

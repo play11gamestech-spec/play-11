@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../config/firebase';
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 
 const LoginPage = () => {
   const [mobile, setMobile] = useState('');
@@ -19,56 +17,22 @@ const LoginPage = () => {
 
   const isInvalid = mobile.length !== 10;
 
-  useEffect(() => {
-    // Initialize verifier
-    const verifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-      'size': 'invisible',
-      'callback': (response) => {
-        // reCAPTCHA solved
-      }
-    });
-    
-    window.recaptchaVerifier = verifier;
-
-    // Cleanup on unmount
-    return () => {
-      if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.clear();
-        window.recaptchaVerifier = null;
-      }
-    };
-  }, []);
-
   const handleSendOTP = async () => {
     if (isInvalid) return;
     setIsLoading(true);
-    setError(null);
-
-    const fullPhoneNumber = '+91' + mobile;
-
-    try {
-      const appVerifier = window.recaptchaVerifier;
-      const confirmationResult = await signInWithPhoneNumber(auth, fullPhoneNumber, appVerifier);
-      
-      window.confirmationResult = confirmationResult;
+    
+    // ✅ PURE MOCKUP MODE: Directly navigate to OTP
+    console.log('🧪 Mockup Mode: Simulating OTP send...');
+    
+    setTimeout(() => {
       localStorage.setItem('temp_mobile', mobile);
       navigate('/otp');
-    } catch (err) {
-      console.error('Firebase Auth Error:', err);
-      setError(err.message || 'Failed to send OTP. Please try again.');
-      if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.render().then(widgetId => {
-          if (window.grecaptcha) window.grecaptcha.reset(widgetId);
-        });
-      }
-    } finally {
       setIsLoading(false);
-    }
+    }, 800);
   };
 
   return (
     <div className="leadnius-auth-wrapper">
-      {/* Top Header - Restored God-tier Logo Blocks */}
       <header className="auth-topbar">
         <div className="topbar-inner">
           <div className="logo-boxes">
@@ -78,16 +42,14 @@ const LoginPage = () => {
             <div className="logo-box">O</div>
           </div>
           <nav className="nav-links">
-            <a href="/#home" onClick={(e) => { e.preventDefault(); navigate('/'); }}>Home</a>
-            <a href="/#how" onClick={(e) => { e.preventDefault(); navigate('/'); }}>How it works</a>
-            <a href="/#contests" onClick={(e) => { e.preventDefault(); navigate('/'); }}>Contests</a>
-            <a href="/#faq" onClick={(e) => { e.preventDefault(); navigate('/'); }}>FAQ</a>
+            <a href="/#" onClick={(e) => { e.preventDefault(); navigate('/'); }}>Home</a>
+            <a href="/#" onClick={(e) => { e.preventDefault(); navigate('/'); }}>How it works</a>
+            <a href="/#" onClick={(e) => { e.preventDefault(); navigate('/'); }}>Contests</a>
+            <a href="/#" onClick={(e) => { e.preventDefault(); navigate('/'); }}>FAQ</a>
           </nav>
-          <div className="header-spacer"></div>
         </div>
       </header>
 
-      {/* Main Content Area */}
       <main className="auth-main-content">
         <div className="join-card">
           <button className="close-btn" onClick={() => navigate('/')}>×</button>
@@ -127,8 +89,6 @@ const LoginPage = () => {
             </button>
           </form>
 
-          <div id="recaptcha-container"></div>
-
           <p className="footer-link">
             Already a member? <span className="link-text" onClick={() => navigate('/register')}>Sign In</span>
           </p>
@@ -143,7 +103,6 @@ const LoginPage = () => {
           flex-direction: column;
           font-family: 'Lexend', sans-serif;
         }
-
         .auth-topbar {
           position: sticky;
           top: 0;
@@ -152,7 +111,6 @@ const LoginPage = () => {
           border-bottom: 1px solid rgba(255,255,255,0.08);
           width: 100%;
         }
-
         .topbar-inner {
           max-width: 1200px;
           margin: 0 auto;
@@ -160,49 +118,21 @@ const LoginPage = () => {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 16px;
         }
-
         .logo-boxes { display: flex; gap: 8px; }
-        
         .logo-box {
           width: 38px;
           height: 38px;
+          background: #0c4a6e;
+          border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 12px;
-          background: #0c4a6e;
-          border: 1px solid rgba(56, 189, 248, 0.4);
-          color: #fff;
+          color: white;
           font-weight: 800;
-          font-size: 14px;
         }
-
-        .nav-links {
-          display: flex;
-          gap: 24px;
-          color: #cbd5e1;
-          font-size: 14px;
-        }
-
-        .nav-links a { 
-          color: inherit; 
-          text-decoration: none; 
-          font-weight: 600;
-        }
-        
-        .nav-links a:hover { color: #fff; }
-
-        .header-spacer {
-          width: 100px; /* To balance the logo side since button is hidden */
-          display: none;
-        }
-
-        @media (max-width: 960px) {
-          .nav-links { display: none; }
-        }
-
+        .nav-links { display: flex; gap: 24px; }
+        .nav-links a { color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 14px; }
         .auth-main-content {
           flex: 1;
           display: flex;
@@ -210,7 +140,6 @@ const LoginPage = () => {
           justify-content: center;
           padding: 20px;
         }
-
         .join-card {
           background: white;
           width: 100%;
@@ -221,148 +150,25 @@ const LoginPage = () => {
           text-align: center;
           box-shadow: 0 24px 48px rgba(0,0,0,0.2);
         }
-
-        .close-btn {
-          position: absolute;
-          top: 24px;
-          right: 24px;
-          background: transparent;
-          border: none;
-          font-size: 24px;
-          color: #94a3b8;
-          cursor: pointer;
-        }
-
-        .card-top-logo {
-          display: flex;
-          gap: 6px;
-          justify-content: center;
-          margin-bottom: 32px;
-        }
-
-        .mini-box {
-          width: 38px;
-          height: 38px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 10px;
-          background: #0c4a6e;
-          border: 1px solid rgba(56, 189, 248, 0.4);
-          color: #fff;
-          font-weight: 900;
-          font-size: 14px;
-        }
-
-        .card-title {
-          color: #0f172a;
-          font-size: 38px;
-          font-weight: 850;
-          line-height: 1.1;
-          margin-bottom: 20px;
-          letter-spacing: -1px;
-        }
-
-        .card-subtitle {
-          color: #64748b;
-          font-size: 17px;
-          line-height: 1.5;
-          margin-bottom: 40px;
-          padding: 0 10px;
-        }
-
-        .auth-form {
-          width: 100%;
-        }
-
-        .input-group {
-          width: 100%;
-          border: 2px solid #e2e8f0;
-          border-radius: 16px;
-          margin-bottom: 16px;
-          transition: all 0.2s;
-          overflow: hidden;
-        }
-
-        .input-group.active {
-          border-color: #3b82f6;
-          box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-        }
-
-        .input-group input {
-          width: 100%;
-          padding: 18px 24px;
-          border: none;
-          outline: none;
+        .close-btn { position: absolute; top: 24px; right: 24px; border: none; background: none; font-size: 24px; color: #94a3b8; cursor: pointer; }
+        .mini-box { width: 38px; height: 38px; background: #0c4a6e; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; }
+        .card-top-logo { display: flex; gap: 6px; justify-content: center; margin-bottom: 32px; }
+        .card-title { color: #0f172a; font-size: 38px; font-weight: 850; letter-spacing: -1px; margin-bottom: 20px; }
+        .card-subtitle { color: #64748b; font-size: 17px; margin-bottom: 40px; }
+        .input-group { border: 2px solid #e2e8f0; border-radius: 16px; margin-bottom: 16px; overflow: hidden; }
+        .input-group.active { border-color: #3b82f6; }
+        .input-group input { 
+          width: 100%; 
+          padding: 18px 24px; 
+          border: none; 
+          outline: none; 
           font-size: 16px;
-          color: #0f172a;
-          font-weight: 500;
+          color: #0f172a; /* Dark text for white background */
+          background: transparent;
         }
-
-        .input-group input::placeholder {
-          color: #94a3b8;
-        }
-
-        .join-btn {
-          width: 100%;
-          background: #404eed;
-          color: white;
-          border: none;
-          padding: 18px;
-          border-radius: 16px;
-          font-size: 18px;
-          font-weight: 700;
-          cursor: pointer;
-          transition: transform 0.2s, background 0.2s;
-          box-shadow: 0 4px 14px rgba(64, 78, 237, 0.3);
-        }
-
-        .join-btn:hover {
-          background: #3641c8;
-          transform: translateY(-1px);
-        }
-
-        .join-btn:disabled {
-          background: #94a3b8;
-          cursor: not-allowed;
-          box-shadow: none;
-          transform: none;
-        }
-
-        .error-text {
-          color: #ef4444;
-          font-size: 13px;
-          font-weight: 600;
-          margin-bottom: 16px;
-          text-align: left;
-          padding-left: 4px;
-        }
-
-        .footer-link {
-          margin-top: 32px;
-          color: #64748b;
-          font-size: 14px;
-          font-weight: 500;
-        }
-
-        .link-text {
-          color: #1a56db;
-          font-weight: 700;
-          cursor: pointer;
-        }
-
-        @media (max-width: 640px) {
-          .auth-header-ribbon {
-            padding: 0 20px;
-            height: 70px;
-          }
-          .card-title {
-            font-size: 32px;
-          }
-          .join-card {
-            padding: 48px 24px 32px;
-          }
-        }
+        .join-btn { width: 100%; background: #404eed; color: white; border: none; padding: 18px; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer; }
+        .footer-link { margin-top: 32px; color: #64748b; font-size: 14px; }
+        .link-text { color: #1a56db; font-weight: 700; cursor: pointer; }
       `}</style>
     </div>
   );

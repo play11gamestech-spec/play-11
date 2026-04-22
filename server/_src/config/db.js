@@ -7,6 +7,10 @@ const pool = new Pool({
   }
 });
 
+if (!process.env.DATABASE_URL) {
+  console.warn('⚠️ DATABASE_URL is missing! Database operations will fail.');
+}
+
 const db = {
   query: (text, params) => pool.query(text, params),
 };
@@ -16,6 +20,8 @@ const initDB = async () => {
   if (global.dbInitialized) return;
   
   try {
+    console.log('🔄 Initializing database schema...');
+    
     // Run essential table creations in a single batch
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
@@ -61,15 +67,56 @@ const initDB = async () => {
         result_at TIMESTAMP,
         marks_per_q INTEGER DEFAULT 2
       );
+
+      CREATE TABLE IF NOT EXISTS matches (
+        id TEXT PRIMARY KEY,
+        sport_type TEXT,
+        team_a TEXT,
+        team_b TEXT,
+        team_a_logo TEXT,
+        team_b_logo TEXT,
+        start_time TIMESTAMP,
+        venue TEXT,
+        status TEXT DEFAULT 'upcoming'
+      );
+
+      CREATE TABLE IF NOT EXISTS questions (
+        id TEXT PRIMARY KEY,
+        quiz_id TEXT REFERENCES quizzes(id),
+        question_text TEXT NOT NULL,
+        marks INTEGER DEFAULT 2
+      );
+
+      CREATE TABLE IF NOT EXISTS question_options (
+        id TEXT PRIMARY KEY,
+        question_id TEXT REFERENCES questions(id),
+        option_text TEXT NOT NULL,
+        option_value TEXT NOT NULL
+      );
+
+      CREATE TABLE IF NOT EXISTS correct_answers (
+        id TEXT PRIMARY KEY,
+        question_id TEXT REFERENCES questions(id),
+        answer_value TEXT NOT NULL
+      );
+
+      CREATE TABLE IF NOT EXISTS submissions (
+        id TEXT PRIMARY KEY,
+        user_id TEXT REFERENCES users(id),
+        quiz_id TEXT REFERENCES quizzes(id),
+        score INTEGER DEFAULT 0,
+        total_marks INTEGER DEFAULT 0,
+        submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
     `);
     
     // Asynchronously handle migrations and seeding without blocking
     seedAndMigrate().catch(err => console.error('Background DB Error:', err));
     
     global.dbInitialized = true;
-    console.log('PostgreSQL (Neon) base tables confirmed.');
+    console.log('✅ PostgreSQL (Neon) schema initialized.');
   } catch (error) {
-    console.error('CRITICAL: Error initializing essential database tables:', error);
+    console.error('❌ CRITICAL: Error initializing essential database tables:', error);
   }
 };
 

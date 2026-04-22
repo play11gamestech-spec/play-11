@@ -4,8 +4,21 @@ import { Menu, X, Home, Trophy, Wallet, BarChart3, User, Check } from "lucide-re
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("play11_user"));
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleJoinContest = () => {
+    const isLoggedIn = !!localStorage.getItem("play11_user");
+    const hasAccount = localStorage.getItem("play11_has_account") === "true";
+
+    if (isLoggedIn) {
+      navigate("/game-quiz-play/1");
+    } else if (hasAccount) {
+      navigate("/login");
+    } else {
+      navigate("/register");
+    }
+  };
 
   const handleOpenLogin = () => {
     navigate("/login");
@@ -56,24 +69,14 @@ export default function LandingPage() {
           </nav>
 
           <div className="header-actions">
-            {!isLoggedIn ? (
-              <>
-                <button className="secondary-btn desktop-only" style={{ padding: "10px 18px", borderRadius: "12px", fontSize: "14px" }} onClick={() => navigate("/register")}>
-                  Signup
-                </button>
-                <button className="login-btn desktop-only" onClick={handleOpenLogin}>
-                  Login
-                </button>
-              </>
-            ) : (
-              <div className="user-chip desktop-only" style={{ display: "flex" }}>
-                <div className="avatar">A</div>
-                <div>
-                  <div style={{ fontSize: "12px", fontWeight: "800" }}>Aman Kumar</div>
-                  <div style={{ fontSize: "11px", color: "#cbd5e1" }}>+91 98XXXXXX21</div>
-                </div>
-              </div>
-            )}
+            <>
+              <button className="secondary-btn desktop-only" style={{ padding: "10px 18px", borderRadius: "12px", fontSize: "14px" }} onClick={() => navigate("/register")}>
+                Signup
+              </button>
+              <button className="login-btn desktop-only" onClick={handleOpenLogin}>
+                Login
+              </button>
+            </>
             
             <button className="menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -84,7 +87,7 @@ export default function LandingPage() {
 
       <section className="hero" id="home">
         <div className="hero-grid">
-          <div>
+          <div className="hero-content">
             <div className="badge">India’s Smartest Quiz Arena 🧠</div>
             <h1>
               Earn from <br />
@@ -94,7 +97,7 @@ export default function LandingPage() {
               India's Smartest Quiz Arena — compete in real quiz battles, rank higher, win real prizes.
             </p>
             <div className="hero-actions">
-              <button className="primary-btn">Start Playing — ₹1</button>
+              <button className="primary-btn" onClick={handleJoinContest}>Join Quiz</button>
               <button className="secondary-btn">Watch Demo</button>
             </div>
             <div className="stats-row">
@@ -116,70 +119,6 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-
-          <div className="hero-phone">
-            <div className="hero-phone-inner">
-              <div className="row-between">
-                <div>
-                  <div className="subtle">Live Quiz</div>
-                  <div className="white-title">UPSC • General Studies</div>
-                </div>
-                <div className="live-pill">Live Now</div>
-              </div>
-
-              <div className="deadline-box">
-                <div className="row-between">
-                  <div>
-                    <div className="subtle" style={{ color: "#94a3b8" }}>
-                      Quiz deadline
-                    </div>
-                    <div className="white-title">Closes in 00h 20m</div>
-                  </div>
-                  <div className="timer-badge">00:20:12</div>
-                </div>
-              </div>
-
-              <div className="mini-grid">
-                <div className="mini-item">
-                  <div className="label">Unlock</div>
-                  <div className="value">₹5</div>
-                </div>
-                <div className="mini-item">
-                  <div className="label">Reward Pool</div>
-                  <div className="value">₹500</div>
-                </div>
-                <div className="mini-item">
-                  <div className="label">Joined</div>
-                  <div className="value">78</div>
-                </div>
-              </div>
-
-              <div className="question-box">
-                <div className="question-header">
-                  <div className="subtle">Question 1 of 11</div>
-                  <div style={{ fontSize: "11px", color: "#94a3b8", fontWeight: "700" }}>Live leaderboard active</div>
-                </div>
-                <div className="question">Who is widely known as the architect of the Indian Constitution?</div>
-                <button className="option">
-                  <span className="alpha">A</span>Mahatma Gandhi
-                </button>
-                <button className="option correct">
-                  <span className="alpha">B</span>Dr. B.R. Ambedkar
-                </button>
-                <button className="option">
-                  <span className="alpha">C</span>Jawaharlal Nehru
-                </button>
-                <button className="option">
-                  <span className="alpha">D</span>Sardar Vallabhbhai Patel
-                </button>
-              </div>
-
-              <div className="notice">
-                Rankings depend on accuracy, time efficiency, and final submission order. Rewards are performance-based
-                and not guaranteed.
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -187,7 +126,7 @@ export default function LandingPage() {
         <div className="section-inner">
           <div className="center-head">
             <div className="eyebrow">Steps</div>
-            <h2>Earn from what you learn.</h2>
+            <h2>How to join</h2>
             <div className="subtext">
               Join live quizzes, compete with others, and prove your knowledge under real-time pressure.
             </div>
@@ -344,47 +283,6 @@ export default function LandingPage() {
             <span className="tag">& more</span>
           </div>
 
-          <div className="hero-phone" style={{ marginTop: "40px", maxWidth: "480px" }}>
-            <div className="hero-phone-inner">
-              <div className="row-between">
-                <div className="subtle" style={{ background: "rgba(56, 189, 248, 0.1)", padding: "4px 10px", borderRadius: "8px" }}>SSC CGL — GK</div>
-                <div className="subtle">0:20</div>
-              </div>
-
-              <div className="mini-grid" style={{ margin: "16px 0" }}>
-                <div className="mini-item">
-                  <div className="label">Prize Pool</div>
-                  <div className="value">₹500</div>
-                </div>
-                <div className="mini-item">
-                  <div className="label">Entry</div>
-                  <div className="value">₹11</div>
-                </div>
-                <div className="mini-item">
-                  <div className="label">Players</div>
-                  <div className="value">46</div>
-                </div>
-              </div>
-
-              <div className="question-box">
-                <div className="white-title" style={{ marginBottom: "14px", fontSize: "16px" }}>Who is the Father of Indian Constitution?</div>
-                <div style={{ display: "grid", gap: "10px" }}>
-                  <div className="option" style={{ padding: "12px", fontSize: "14px" }}>
-                    <span className="alpha">A</span> Mahatma Gandhi
-                  </div>
-                  <div className="option correct" style={{ padding: "12px", fontSize: "14px" }}>
-                    <span className="alpha">B</span> Dr. B.R. Ambedkar ✓
-                  </div>
-                  <div className="option" style={{ padding: "12px", fontSize: "14px" }}>
-                    <span className="alpha">C</span> Jawaharlal Nehru
-                  </div>
-                  <div className="option" style={{ padding: "12px", fontSize: "14px" }}>
-                    <span className="alpha">D</span> Sardar Patel
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -433,7 +331,7 @@ export default function LandingPage() {
                   <strong>43/100 joined</strong>
                 </div>
               </div>
-              <button className="card-btn">View Upcoming Quiz</button>
+              <button className="card-btn" onClick={handleJoinContest}>View Upcoming Quiz</button>
             </div>
 
             <div className="contest-card featured">
@@ -465,7 +363,7 @@ export default function LandingPage() {
                   <strong>78/100 joined</strong>
                 </div>
               </div>
-              <button className="dark-btn">Join Live Quiz</button>
+              <button className="dark-btn" onClick={handleJoinContest}>Join Live Quiz</button>
             </div>
 
             <div className="contest-card">
@@ -504,54 +402,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {isLoggedIn && (
-        <section className="dashboard-logged" style={{ display: "block" }} id="loggedSection">
-          <div className="wrap">
-            <div className="welcome-card">
-              <div className="eyebrow" style={{ color: "#7dd3fc" }}>
-                Welcome back
-              </div>
-              <h3>Aman Kumar</h3>
-              <p>Ready for today’s live quizzes. Join before deadline and improve your rank.</p>
-              <div className="welcome-stats">
-                <div className="welcome-mini">
-                  <strong>12</strong>
-                  <span>Joined</span>
-                </div>
-                <div className="welcome-mini">
-                  <strong>₹240</strong>
-                  <span>Rewards</span>
-                </div>
-                <div className="welcome-mini">
-                  <strong>#28</strong>
-                  <span>Rank</span>
-                </div>
-              </div>
-            </div>
-            <div className="my-dash">
-              <div className="eyebrow">My dashboard</div>
-              <div className="my-dash-list">
-                <div className="list-tile">
-                  <strong>My Live Quizzes</strong>
-                  <span>3 active</span>
-                </div>
-                <div className="list-tile">
-                  <strong>Upcoming Joins</strong>
-                  <span>5 scheduled</span>
-                </div>
-                <div className="list-tile">
-                  <strong>Reward Wallet</strong>
-                  <span>₹240 available</span>
-                </div>
-                <div className="list-tile">
-                  <strong>Leaderboard Rank</strong>
-                  <span>#28 this week</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Dashboard section removed */}
 
       <section className="section white">
         <div className="section-inner">
@@ -612,7 +463,7 @@ export default function LandingPage() {
                       <strong>56 joined</strong>
                     </div>
                   </div>
-                  <button className="dark-btn">View Quiz Details</button>
+                  <button className="dark-btn" onClick={handleJoinContest}>View Quiz Details</button>
                 </div>
 
                 <div className="quiz-item">
@@ -642,7 +493,7 @@ export default function LandingPage() {
                       <strong>92 joined</strong>
                     </div>
                   </div>
-                  <button className="dark-btn">View Quiz Details</button>
+                  <button className="dark-btn" onClick={handleJoinContest}>View Quiz Details</button>
                 </div>
 
                 <div className="quiz-item">
@@ -672,7 +523,7 @@ export default function LandingPage() {
                       <strong>38 joined</strong>
                     </div>
                   </div>
-                  <button className="dark-btn">View Quiz Details</button>
+                  <button className="dark-btn" onClick={handleJoinContest}>View Quiz Details</button>
                 </div>
               </div>
             </div>
@@ -706,16 +557,6 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              <div className="nav-preview" style={{ marginTop: "16px" }}>
-                <div className="eyebrow">Bottom navigation</div>
-                <div className="bottom-nav">
-                  <div className="active">Home</div>
-                  <div>Live</div>
-                  <div>Rewards</div>
-                  <div>Leaderboard</div>
-                  <div>Profile</div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

@@ -7,10 +7,10 @@ const BottomNav = () => {
   const location = useLocation();
 
   const navItems = [
-    { id: 'home', icon: <Home size={22} />, label: 'Home', path: '/home-choice' },
-    { id: 'activity', icon: <Search size={22} />, label: 'Quiz', path: '/study-home' },
-    { id: 'history', icon: <History size={22} />, label: 'Results', path: '/history' },
-    { id: 'profile', icon: <User size={22} />, label: 'Profile', path: '/profile' }
+    { id: 'home', icon: <Home size={18} />, label: 'Home', path: '/home-choice' },
+    { id: 'activity', icon: <Search size={18} />, label: 'Quiz', path: '/study-home' },
+    { id: 'winners', icon: <Trophy size={18} />, label: 'Winners', path: '/leaderboard/1' },
+    { id: 'profile', icon: <User size={18} />, label: 'Profile', path: '/profile' }
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -25,15 +25,15 @@ const BottomNav = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '0.25rem',
+            gap: '2px',
             background: 'none',
             border: 'none',
             cursor: 'pointer',
-            padding: '0.5rem',
+            padding: '4px',
             position: 'relative',
             color: isActive(item.path) ? 'hsl(var(--primary))' : 'hsl(var(--muted-foreground))',
             transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            transform: isActive(item.path) ? 'translateY(-4px) scale(1.1)' : 'none'
+            transform: isActive(item.path) ? 'translateY(-2px) scale(1.05)' : 'none'
           }}
         >
           <div style={{
@@ -47,10 +47,10 @@ const BottomNav = () => {
           </div>
           
           <span style={{ 
-            fontSize: '0.65rem', 
+            fontSize: '0.6rem', 
             fontWeight: 800, 
             opacity: isActive(item.path) ? 1 : 0.7,
-            letterSpacing: '0.02em',
+            letterSpacing: '0.01em',
             textTransform: 'uppercase'
           }}>
             {item.label}

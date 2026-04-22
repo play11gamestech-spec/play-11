@@ -1,26 +1,21 @@
 {
-  "name": "play-11",
   "version": 2,
+  "name": "play-11",
   "builds": [
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": {
-        "distDir": "frontend/dist"
-      }
+      "config": { "distDir": "frontend/dist" }
     },
     {
-      "src": "backend/server.js",
+      "src": "server/index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/server.js"
-    },
-    {
-      "handle": "filesystem"
+      "dest": "/server/index.js"
     },
     {
       "src": "/(.*)",

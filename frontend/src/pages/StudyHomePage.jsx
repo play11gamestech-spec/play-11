@@ -40,8 +40,9 @@ const StudyHomePage = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh', paddingBottom: '140px' }}>
-      <div className="container" style={{ paddingTop: '6.5rem' }}>
+    <div className="luminescent-theme" style={{ minHeight: '100vh', paddingBottom: '140px' }}>
+      <div className="cyber-grid"></div>
+      <div className="container" style={{ paddingTop: '6.5rem', position: 'relative', zIndex: 10 }}>
         
         {/* Website Section Header */}
         <div className="animate-slide-up" style={{ marginBottom: '4rem' }}>
@@ -70,8 +71,10 @@ const StudyHomePage = () => {
                 paddingLeft: '4.5rem', 
                 fontSize: '1.2rem',
                 borderRadius: '1.75rem',
-                border: '1px solid rgba(0,0,0,0.04)',
-                background: 'rgba(255,255,255,0.8)'
+                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'rgba(255,255,255,0.05)',
+                color: 'white',
+                backdropFilter: 'blur(10px)'
               }}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -83,7 +86,7 @@ const StudyHomePage = () => {
         <div className="glass-premium animate-slide-up stagger-2" style={{ 
           padding: 'clamp(1.5rem, 5vw, 3.5rem)', 
           marginBottom: 'clamp(3rem, 8vw, 4.5rem)', 
-          background: 'linear-gradient(135deg, hsla(var(--primary), 0.12) 0%, rgba(255,255,255,0.4) 100%)',
+          background: 'linear-gradient(135deg, hsla(var(--primary), 0.15) 0%, rgba(255,255,255,0.05) 100%)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -99,8 +102,8 @@ const StudyHomePage = () => {
             <h3 style={{ fontSize: 'clamp(1.6rem, 5vw, 2.5rem)', fontWeight: 950, fontFamily: 'Lexend', marginBottom: '0.75rem', color: 'hsl(var(--foreground))', letterSpacing: '-0.04em' }}>Current Affairs 2024</h3>
             <p style={{ fontSize: 'clamp(0.95rem, 3vw, 1.15rem)', color: 'hsl(var(--muted-foreground))', fontWeight: 600, marginBottom: '2rem', opacity: 0.9 }}>15 Top Tier Questions • 10 Mins • Elite Status Boost</p>
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-               <div style={{ background: 'white', padding: '6px 14px', borderRadius: '1rem', fontSize: '0.7rem', fontWeight: 950, color: 'hsl(var(--foreground))', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>#DailyPulse</div>
-               <div style={{ background: 'white', padding: '6px 14px', borderRadius: '1rem', fontSize: '0.7rem', fontWeight: 950, color: 'hsl(var(--foreground))', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>#VerifiedMock</div>
+               <div style={{ background: 'rgba(255,255,255,0.03)', padding: '6px 14px', borderRadius: '1rem', fontSize: '0.7rem', fontWeight: 950, color: '#fff', border: '1px solid rgba(255,255,255,0.05)' }}>#DailyPulse</div>
+               <div style={{ background: 'rgba(255,255,255,0.03)', padding: '6px 14px', borderRadius: '1rem', fontSize: '0.7rem', fontWeight: 950, color: '#fff', border: '1px solid rgba(255,255,255,0.05)' }}>#VerifiedMock</div>
             </div>
           </div>
           <button 
