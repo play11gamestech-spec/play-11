@@ -1062,36 +1062,6 @@ h2 {
     
     .stats-mini, .stats-row { grid-template-columns: repeat(2,1fr); }
     .footer { padding-bottom: 80px; } /* Space for bottom nav */
-    
-    .site-footer { padding: 2.5rem 0 1.5rem; }
-    .footer-grid { 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 2rem 1rem; 
-        margin-bottom: 2rem;
-    }
-    .footer-brand { 
-        grid-column: 1 / -1; 
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .logo-boxes { justify-content: center; }
-    .social-row { justify-content: center; width: 100%; }
-    .footer-brand .footer-desc { 
-        margin-left: auto; 
-        margin-right: auto;
-        font-size: 0.85rem;
-    }
-    .footer-links-col h4 { margin-bottom: 1rem; font-size: 0.9rem; }
-    .footer-links-col li { font-size: 0.8rem; margin-bottom: 0.6rem; }
-    .footer-bottom-bar { 
-        flex-direction: column; 
-        text-align: center; 
-        padding-top: 1.5rem;
-        gap: 1.5rem;
-    }
-    .footer-info-tags { justify-content: center; width: 100%; }
 }
 
 @media (max-width: 640px) {

@@ -15,7 +15,6 @@ const Footer = () => {
             <div className="logo-boxes" onClick={() => navigate('/')} style={{ cursor: 'pointer', marginBottom: '1.25rem' }}>
               <div className="logo-box">Q</div>
               <div className="logo-box">U</div>
-              <div className="logo-box">E</div>
               <div className="logo-box">Z</div>
               <div className="logo-box">O</div>
             </div>
@@ -54,7 +53,7 @@ const Footer = () => {
           <div className="footer-links-col">
              <h4>Company</h4>
              <ul>
-               <li>About QUEZO</li>
+               <li>About QUZO</li>
                <li>Privacy Policy</li>
                <li>Terms of Use</li>
                <li>Partner With Us</li>
@@ -67,7 +66,7 @@ const Footer = () => {
                <div className="spark-circle">
                   <Sparkles size={10} fill="currentColor" />
                </div>
-               <span>© {year} QUEZO Global Arena. All Rights Reserved.</span>
+               <span>© {year} QUZO Global Arena. All Rights Reserved.</span>
             </div>
             <div className="footer-info-tags">
                <span>Secure Connection</span>
