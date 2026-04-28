@@ -26,6 +26,11 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
     font-family: 'Outfit', 'Arial', sans-serif;
     background: #0d1f3c;
@@ -1257,7 +1262,7 @@ h2 {
 .site-header .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 clamp(1rem, 5vw, 40px);
     height: 100%;
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Home, BookOpen, Trophy, History, User, LogOut } from 'lucide-react';
+import { Menu, X, Home, BookOpen, Trophy, History, User, LogOut, Globe } from 'lucide-react';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +17,7 @@ const Header = () => {
   }, []);
 
   const navItems = [
+    { name: 'Landing', path: '/', icon: <Globe size={18} /> },
     { name: 'Home', path: '/home-choice', icon: <Home size={18} /> },
     { name: 'Study Zone', path: '/study-home', icon: <BookOpen size={18} /> },
     { name: 'Game Zone', path: '/game-home', icon: <Trophy size={18} /> },

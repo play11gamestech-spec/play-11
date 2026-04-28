@@ -118,7 +118,16 @@ const MatchQuizRoom = () => {
   });
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a192f', padding: '6rem 2rem 2rem 2rem', fontFamily: 'Inter, sans-serif', color: '#fff' }}>
+    <div style={{ 
+      minHeight: '100vh', 
+      background: '#0a192f', 
+      padding: 'clamp(5rem, 10vh, 7rem) clamp(1rem, 3vw, 2rem) 2rem clamp(1rem, 3vw, 2rem)', 
+      fontFamily: 'Inter, sans-serif', 
+      color: '#fff',
+      overflowX: 'hidden',
+      width: '100%',
+      boxSizing: 'border-box'
+    }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         
         {/* Top Header */}
@@ -127,7 +136,7 @@ const MatchQuizRoom = () => {
             <div style={{ fontSize: '0.7rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>
               MATCH QUIZ ROOM
             </div>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: 800, margin: '0 0 0.5rem 0', color: '#f8fafc' }}>
+            <h1 style={{ fontSize: 'clamp(1.2rem, 6vw, 1.8rem)', fontWeight: 800, margin: '0 0 0.5rem 0', color: '#f8fafc', lineHeight: 1.2 }}>
               {isFinished ? "Match Quiz Completed" : currentQuiz.title}
             </h1>
             <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: 0, maxWidth: '600px', lineHeight: 1.5 }}>
@@ -138,18 +147,18 @@ const MatchQuizRoom = () => {
           </div>
 
           {!isFinished && (
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <div style={{ background: '#1e293b', padding: '0.75rem 1.25rem', borderRadius: '0.75rem', textAlign: 'center', border: '1px solid #334155' }}>
-                <div style={{ fontSize: '0.6rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '0.25rem' }}>GAME</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#f8fafc' }}>{id === '3' ? 'Practice' : 'Live'}</div>
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <div style={{ background: '#1e293b', padding: '0.6rem 1rem', borderRadius: '0.75rem', textAlign: 'center', border: '1px solid #334155', flex: '1 1 80px', minWidth: '80px' }}>
+                <div style={{ fontSize: '0.55rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '0.25rem' }}>GAME</div>
+                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#f8fafc' }}>{id === '3' ? 'Practice' : 'Live'}</div>
               </div>
-              <div style={{ background: '#1e293b', padding: '0.75rem 1.25rem', borderRadius: '0.75rem', textAlign: 'center', border: '1px solid #334155' }}>
-                <div style={{ fontSize: '0.6rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '0.25rem' }}>TIME LEFT</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#f8fafc' }}>{formatTime(timeLeft)}</div>
+              <div style={{ background: '#1e293b', padding: '0.6rem 1rem', borderRadius: '0.75rem', textAlign: 'center', border: '1px solid #334155', flex: '1 1 80px', minWidth: '80px' }}>
+                <div style={{ fontSize: '0.55rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '0.25rem' }}>TIME LEFT</div>
+                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#f8fafc' }}>{formatTime(timeLeft)}</div>
               </div>
-              <div style={{ background: '#1e293b', padding: '0.75rem 1.25rem', borderRadius: '0.75rem', textAlign: 'center', border: '1px solid #334155' }}>
-                <div style={{ fontSize: '0.6rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '0.25rem' }}>PROGRESS</div>
-                <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#f8fafc' }}>{currentIdx + 1}/{questions.length}</div>
+              <div style={{ background: '#1e293b', padding: '0.6rem 1rem', borderRadius: '0.75rem', textAlign: 'center', border: '1px solid #334155', flex: '1 1 80px', minWidth: '80px' }}>
+                <div style={{ fontSize: '0.55rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '0.25rem' }}>PROGRESS</div>
+                <div style={{ fontSize: '1rem', fontWeight: 800, color: '#f8fafc' }}>{currentIdx + 1}/{questions.length}</div>
               </div>
             </div>
           )}
@@ -160,7 +169,7 @@ const MatchQuizRoom = () => {
           <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
             
             {/* Left Column (Question Card) */}
-            <div style={{ flex: '1 1 600px', background: '#ffffff', borderRadius: '1.5rem', padding: '2rem', color: '#0f172a' }}>
+            <div className="quiz-main-card" style={{ flex: '1 1 650px', background: '#ffffff', borderRadius: '1.5rem', padding: 'clamp(1rem, 5vw, 2rem)', color: '#0f172a', minWidth: '0', boxSizing: 'border-box' }}>
               
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                 <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -175,7 +184,7 @@ const MatchQuizRoom = () => {
                 <div style={{ width: `${progressPercent}%`, height: '100%', background: '#3b82f6', borderRadius: '999px', transition: 'width 0.3s ease' }}></div>
               </div>
 
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '2rem', lineHeight: 1.4, color: '#0f172a' }}>
+              <h2 style={{ fontSize: 'clamp(1.1rem, 4vw, 1.4rem)', fontWeight: 800, marginBottom: '2rem', lineHeight: 1.4, color: '#0f172a' }}>
                 {currentQ.q}
               </h2>
 
@@ -199,13 +208,13 @@ const MatchQuizRoom = () => {
                       }}>
                         {String.fromCharCode(65 + idx)}
                       </div>
-                      <span style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>{opt}</span>
+                      <span style={{ fontSize: 'clamp(0.9rem, 3vw, 1rem)', fontWeight: 700, color: '#0f172a', wordBreak: 'break-word' }}>{opt}</span>
                     </div>
                   );
                 })}
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                 <button 
                   onClick={handlePrev}
                   style={{
@@ -231,14 +240,14 @@ const MatchQuizRoom = () => {
             </div>
 
             {/* Right Column (Sidebars) */}
-            <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div className="quiz-sidebar" style={{ flex: '1 1 320px', display: 'flex', flexDirection: 'column', gap: '1.5rem', minWidth: '0', boxSizing: 'border-box' }}>
               
               {/* Question Navigator */}
               <div style={{ background: '#1e293b', borderRadius: '1.25rem', padding: '1.5rem', border: '1px solid #334155' }}>
                 <h3 style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.25rem' }}>
                   QUESTION NAVIGATOR
                 </h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.75rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(42px, 1fr))', gap: '0.6rem' }}>
                   {questions.map((_, i) => {
                     let bg = '#334155';
                     let color = '#94a3b8';
@@ -340,6 +349,33 @@ const MatchQuizRoom = () => {
         )}
 
       </div>
+      
+      <style>{`
+        @media (max-width: 1024px) {
+          .quiz-main-card, .quiz-sidebar {
+            flex: 1 1 100% !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .quiz-main-card {
+            border-radius: 1.25rem !important;
+          }
+          .quiz-stat-box {
+            padding: 0.5rem 0.75rem !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .quiz-main-card {
+            padding: 1rem !important;
+          }
+          button {
+            padding: 0.6rem 1rem !important;
+            font-size: 0.8rem !important;
+            flex: 1;
+            min-width: 100px;
+          }
+        }
+      `}</style>
     </div>
   );
 };

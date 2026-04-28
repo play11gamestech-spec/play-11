@@ -49,7 +49,7 @@ export default function LandingPage() {
     <div className="page">
       <header className="topbar">
         <div className="topbar-inner">
-          <div className="logo-boxes" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
+          <div className="logo-boxes" onClick={() => navigate("/home-choice")} style={{ cursor: "pointer" }}>
             <div className="logo-box">Q</div>
             <div className="logo-box">U</div>
             <div className="logo-box">Z</div>
@@ -57,7 +57,7 @@ export default function LandingPage() {
           </div>
           
           <nav className={`nav-links ${isMenuOpen ? "open" : ""}`}>
-            <a href="#home" onClick={() => setIsMenuOpen(false)}>Home</a>
+            <a href="#home" onClick={(e) => { e.preventDefault(); navigate("/home-choice"); setIsMenuOpen(false); }}>Home</a>
             <a href="#how" onClick={() => setIsMenuOpen(false)}>How it works</a>
             <a href="#contests" onClick={() => setIsMenuOpen(false)}>Contests</a>
             <a href="#faq" onClick={() => setIsMenuOpen(false)}>FAQ</a>
@@ -675,7 +675,7 @@ export default function LandingPage() {
 
       <div className="sticky-bottom-nav">
         <div className="bottom-nav-inner">
-          <div className="nav-item active">
+          <div className="nav-item active" onClick={() => navigate("/home-choice")} style={{ cursor: 'pointer' }}>
             <Home size={20} />
             <span>Home</span>
           </div>
