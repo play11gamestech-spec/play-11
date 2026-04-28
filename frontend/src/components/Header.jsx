@@ -38,22 +38,12 @@ const Header = () => {
     <nav className={`site-header ${scrolled ? 'scrolled' : ''}`}>
       <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         
-        {/* Logo - QUIZ ROOM Branding */}
-        <div 
-          onClick={() => navigate('/home-choice')} 
-          style={{ 
-            cursor: 'pointer',
-            fontSize: '1.25rem',
-            fontWeight: 900,
-            letterSpacing: '0.05em',
-            color: '#38bdf8',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.2rem'
-          }}
-        >
-          <span style={{ color: 'white' }}>QUIZ</span>
-          <span>ROOM</span>
+        {/* Logo - QUZO Branding */}
+        <div className="logo-boxes" onClick={() => navigate('/home-choice')} style={{ cursor: 'pointer' }}>
+          <div className="logo-box">Q</div>
+          <div className="logo-box">U</div>
+          <div className="logo-box">Z</div>
+          <div className="logo-box">O</div>
         </div>
 
         {/* Desktop Nav */}

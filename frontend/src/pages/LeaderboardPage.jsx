@@ -87,7 +87,7 @@ const LeaderboardPage = () => {
 
         .podium-section {
           background: #ffffff;
-          padding: 60px 20px 40px;
+          padding: 100px 20px 40px;
           color: #0f172a;
           text-align: center;
           border-bottom: 1px solid #f1f5f9;
