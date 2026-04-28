@@ -17,10 +17,10 @@ export default function LandingPage() {
     const isLoggedIn = !!localStorage.getItem("play11_user");
     
     if (isLoggedIn) {
-      navigate("/game-quiz-play/1");
+      navigate("/home-choice");
     } else {
       // Remember intent for redirection after signup
-      localStorage.setItem("auth_redirect", "/game-quiz-play/1");
+      localStorage.setItem("auth_redirect", "/home-choice");
       navigate("/register");
     }
   };

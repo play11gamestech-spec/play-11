@@ -42,28 +42,14 @@ const RegisterPage = () => {
       localStorage.setItem('user_name', formData.name);
       localStorage.setItem('user_mobile', formData.mobile);
       localStorage.setItem('user_profession', formData.profession);
-      
-      const userObj = {
-        name: formData.name,
-        mobile: formData.mobile,
-        email: formData.email,
-        dob: formData.dob,
-        profession: formData.profession
-      };
-      localStorage.setItem('play11_user', JSON.stringify(userObj));
       localStorage.setItem('play11_has_account', 'true');
       
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Check for smart redirection
-      const redirectPath = localStorage.getItem('auth_redirect');
-      if (redirectPath) {
-        localStorage.removeItem('auth_redirect');
-        navigate(redirectPath);
-      } else {
-        navigate('/home-choice');
-      }
+      // Redirect to login page to complete authentication via OTP
+      // We DO NOT remove 'auth_redirect' here, so OtpPage can use it after login.
+      navigate('/login');
     } catch (err) {
       setError(err.message || 'Registration failed. Please try again.');
     } finally {

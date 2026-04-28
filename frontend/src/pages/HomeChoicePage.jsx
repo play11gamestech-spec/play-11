@@ -158,10 +158,14 @@ const HomeChoicePage = () => {
                     </div>
 
                     <button className={`quiz-join-btn ${room.btnColor}`} onClick={() => {
-                      if (room.id === 'study') {
-                        navigate('/dummy-quiz-flow');
+                      const isLoggedIn = !!localStorage.getItem("play11_user");
+                      let targetPath = room.id === 'study' ? '/dummy-quiz-flow' : room.path;
+
+                      if (isLoggedIn) {
+                        navigate(targetPath);
                       } else {
-                        navigate(room.path);
+                        localStorage.setItem("auth_redirect", targetPath);
+                        navigate("/register");
                       }
                     }}>
                       Join Quiz @ {room.entry}
