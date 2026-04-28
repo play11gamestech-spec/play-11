@@ -50,12 +50,21 @@ const OtpPage = () => {
     console.log('🧪 Mockup Mode: Redirecting directly to dashboard...');
     
     // Simulate a bit of processing
-    setTimeout(() => {
-      localStorage.setItem('user_name', 'Scholar');
-      localStorage.setItem('user_mobile', mobile);
-      localStorage.setItem('isAuthenticated', 'true');
-      navigate('/home-choice');
-    }, 800);
+      setTimeout(() => {
+        localStorage.setItem('user_name', 'Scholar');
+        localStorage.setItem('user_mobile', mobile);
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('play11_user', JSON.stringify({ name: 'Scholar', mobile: mobile }));
+        
+        // Check for smart redirection
+        const redirectPath = localStorage.getItem('auth_redirect');
+        if (redirectPath) {
+          localStorage.removeItem('auth_redirect');
+          navigate(redirectPath);
+        } else {
+          navigate('/home-choice');
+        }
+      }, 800);
   };
 
   return (

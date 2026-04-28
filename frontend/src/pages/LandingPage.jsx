@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, X, Home, Trophy, Wallet, BarChart3, User, Check } from "lucide-react";
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("play11_user"));
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    // Check login state on mount
+    const user = localStorage.getItem("play11_user");
+    setIsLoggedIn(!!user);
+  }, []);
 
   const handleJoinContest = () => {
     const isLoggedIn = !!localStorage.getItem("play11_user");
-    const hasAccount = localStorage.getItem("play11_has_account") === "true";
-
+    
     if (isLoggedIn) {
       navigate("/game-quiz-play/1");
-    } else if (hasAccount) {
-      navigate("/login");
     } else {
+      // Remember intent for redirection after signup
+      localStorage.setItem("auth_redirect", "/game-quiz-play/1");
       navigate("/register");
     }
   };
@@ -56,16 +61,14 @@ export default function LandingPage() {
             <a href="#how" onClick={() => setIsMenuOpen(false)}>How it works</a>
             <a href="#contests" onClick={() => setIsMenuOpen(false)}>Contests</a>
             <a href="#faq" onClick={() => setIsMenuOpen(false)}>FAQ</a>
-            {!isLoggedIn && (
-              <>
-                <button className="secondary-btn mobile-only" onClick={() => navigate("/register")}>
-                  Signup
-                </button>
-                <button className="login-btn mobile-only" onClick={handleOpenLogin}>
-                  Login
-                </button>
-              </>
-            )}
+            <>
+              <button className="secondary-btn mobile-only" onClick={() => navigate("/register")}>
+                Signup
+              </button>
+              <button className="login-btn mobile-only" onClick={handleOpenLogin}>
+                Login
+              </button>
+            </>
           </nav>
 
           <div className="header-actions">

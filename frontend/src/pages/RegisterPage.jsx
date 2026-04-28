@@ -55,7 +55,15 @@ const RegisterPage = () => {
       
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1500));
-      navigate('/home-choice');
+      
+      // Check for smart redirection
+      const redirectPath = localStorage.getItem('auth_redirect');
+      if (redirectPath) {
+        localStorage.removeItem('auth_redirect');
+        navigate(redirectPath);
+      } else {
+        navigate('/home-choice');
+      }
     } catch (err) {
       setError(err.message || 'Registration failed. Please try again.');
     } finally {

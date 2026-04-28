@@ -1,144 +1,195 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Trophy, ArrowRight, Zap, Target, Star, Brain, Cpu, ShieldCheck } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
+import UpcomingQuizzes from '../components/UpcomingQuizzes';
+
+// Import Assets
+import studyIcon from '../assets/study-icon.png';
+import sportsIcon from '../assets/sports-icon.png';
+import movieIcon from '../assets/movie-icon.png';
+import newsIcon from '../assets/news-icon.png';
 
 const HomeChoicePage = () => {
   const navigate = useNavigate();
   const userName = localStorage.getItem('user_name') || 'Scholar';
-  const mobileNumber = localStorage.getItem('user_mobile') || '';
 
-  const zones = [
+  const quizRooms = [
     {
       id: 'study',
-      title: 'Study Zone',
-      subtitle: 'Academic Supremacy',
-      desc: 'Master competitive exams with high-precision mock tests and real-time analytics.',
-      icon: <Brain size={38} />,
-      color: '#38bdf8',
+      title: 'Study Quiz',
+      desc: 'SSC, GK, reasoning and exam-style questions for serious aspirants.',
+      icon: studyIcon,
+      prize: '₹500',
+      entry: '₹10',
+      players: '124',
+      time: '02:15:30',
       path: '/study-home',
-      tag: 'Academic',
-      stats: '1.2K+ active'
+      btnColor: 'primary'
     },
     {
-      id: 'game',
-      title: 'Game Zone',
-      subtitle: 'Strategic Arena',
-      desc: 'Prove your expertise in sports prediction and climb the global elite leaderboards.',
-      icon: <Cpu size={38} />,
-      color: '#818cf8',
+      id: 'sports',
+      title: 'Sports Quiz',
+      desc: 'Cricket, IPL, match awareness and sports knowledge battle.',
+      icon: sportsIcon,
+      prize: '₹500',
+      entry: '₹10',
+      players: '255',
+      time: '03:42:18',
       path: '/game-home',
-      tag: 'Sports',
-      stats: '840+ live'
+      btnColor: 'secondary'
+    },
+    {
+      id: 'movie',
+      title: 'Movie Quiz',
+      desc: 'Bollywood, Hollywood, actors, songs, dialogues and cinema trivia.',
+      icon: movieIcon,
+      prize: '₹500',
+      entry: '₹10',
+      players: '172',
+      time: '05:20:45',
+      path: '/game-home',
+      btnColor: 'orange'
+    },
+    {
+      id: 'news',
+      title: 'Daily News Quiz',
+      desc: 'News, current affairs, India, world affairs and daily awareness.',
+      icon: newsIcon,
+      prize: '₹500',
+      entry: '₹10',
+      players: '154',
+      time: '06:10:05',
+      path: '/study-home',
+      btnColor: 'blue'
     }
   ];
 
+  const tabs = ['All Rooms', 'Live', 'Upcoming', 'My Joined'];
+  const [selectedTab, setSelectedTab] = React.useState('All Rooms');
+
   return (
-    <div className="luminescent-theme min-h-screen">
-      {/* Dynamic Cyber Grid Background */}
-      <div className="cyber-grid"></div>
-      
-      <div className="container relative z-10 mx-auto px-4 py-12 md:px-8">
+    <div className="quiz-room-bg">
+      <div className="container" style={{ paddingTop: '6rem', paddingBottom: '6rem' }}>
         
-        {/* Elite Status Bar */}
-        <div className="mb-12 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-400 ring-1 ring-sky-500/20">
-              <ShieldCheck size={28} />
-            </div>
-            <div>
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-sky-400/60">QUZO Academy ID</div>
-              <div className="font-mono text-sm font-bold text-white/90">QA-{mobileNumber.slice(-4) || '7744'}</div>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <div className="hidden text-right md:block">
-              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Identity Status</div>
-              <div className="text-sm font-bold text-emerald-400">Authenticated</div>
-            </div>
-            {/* Standard Profile Icon - Replaces User Photo */}
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-sky-400 ring-1 ring-white/10">
-              <Target size={24} />
-            </div>
-          </div>
+        {/* Welcome Header */}
+        <div className="animate-slide-up" style={{ marginBottom: '2.5rem' }}>
+           <p style={{ fontSize: '0.85rem', fontWeight: 900, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.5rem' }}>QUIZ ROOM</p>
+           <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.02em' }}>Choose your contest room</h1>
         </div>
 
-        {/* Hero Intelligence Section */}
-        <section className="mb-16">
-          <div className="inline-flex items-center gap-3 rounded-full bg-sky-500/5 px-4 py-2 ring-1 ring-sky-500/10">
-            <div className="h-2 w-2 animate-pulse rounded-full bg-sky-400 shadow-[0_0_10px_#38bdf8]"></div>
-            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-sky-400/80">Command Hub Active</span>
+        {/* Hero Banner Section */}
+        {selectedTab === 'All Rooms' && (
+          <div className="quiz-banner-card animate-slide-up stagger-1">
+            <div className="quiz-banner-overlay"></div>
+            <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '2rem' }}>
+              <div style={{ flex: 1, minWidth: '300px' }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.1)', padding: '6px 16px', borderRadius: '999px', marginBottom: '1.5rem', backdropFilter: 'blur(5px)' }}>
+                  <Sparkles size={14} color="#38bdf8" fill="#38bdf8" />
+                  <span style={{ fontSize: '0.7rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.1em' }}>QUIZ LIVE FORMAT</span>
+                </div>
+                <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.1 }}>Eight makes people great 😎</h2>
+                <p style={{ fontSize: '1rem', opacity: 0.8, fontWeight: 500, maxWidth: '500px', lineHeight: 1.5 }}>Every quiz room starts with a countdown. Once the contest begins, users get 8 minutes to answer 10 questions. Rank is based on accuracy and time efficiency.</p>
+              </div>
+              
+              <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+                <div className="quiz-stat-box">
+                  <p style={{ fontSize: '0.7rem', fontWeight: 800, opacity: 0.7, marginBottom: '0.5rem', textTransform: 'uppercase' }}>QUESTIONS</p>
+                  <p style={{ fontSize: '1.8rem', fontWeight: 900 }}>10</p>
+                </div>
+                <div className="quiz-stat-box" style={{ background: 'rgba(56, 189, 248, 0.15)', borderColor: 'rgba(56, 189, 248, 0.3)' }}>
+                  <p style={{ fontSize: '0.7rem', fontWeight: 800, color: '#7dd3fc', marginBottom: '0.5rem', textTransform: 'uppercase' }}>DURATION</p>
+                  <p style={{ fontSize: '1.8rem', fontWeight: 900 }}>8 Min</p>
+                </div>
+              </div>
+            </div>
           </div>
-          
-          <h1 className="mt-6 text-5xl font-black leading-[1.1] tracking-tighter text-white md:text-7xl">
-            Welcome back, <br />
-            <span className="glow-text text-sky-400">{userName}.</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg font-medium leading-relaxed text-white/50">
-            Initialize your objective. Your current standing is in the <span className="text-white">Top 5%</span> of the Academy. Systems are primed for the next challenge.
-          </p>
-        </section>
+        )}
 
-        {/* Selection Matrix */}
-        <div className="mb-16 grid gap-6 md:grid-cols-2 lg:gap-8">
-          {zones.map((zone) => (
-            <div 
-              key={zone.id}
-              className="elite-card group relative p-8 cursor-pointer"
-              onClick={() => navigate(zone.path)}
+        {/* Navigation Tabs */}
+        <div style={{ margin: '2.5rem 0', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }} className="animate-slide-up stagger-2">
+          {tabs.map((tab) => (
+            <button 
+              key={tab} 
+              className={`quiz-tab ${selectedTab === tab ? 'active' : ''}`}
+              onClick={() => setSelectedTab(tab)}
             >
-              <div className="relative z-10">
-                <div 
-                  className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl ring-1 ring-white/10"
-                  style={{ background: `linear-gradient(135deg, ${zone.color}22, transparent)`, color: zone.color }}
-                >
-                  {zone.icon}
-                </div>
-                
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="rounded-lg bg-white/5 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-white/60 ring-1 ring-white/10">
-                    {zone.tag}
-                  </span>
-                  <span className="text-[10px] font-bold text-emerald-400">{zone.stats}</span>
-                </div>
-
-                <h2 className="mb-2 text-3xl font-black tracking-tight text-white">{zone.title}</h2>
-                <div className="mb-4 text-xs font-bold uppercase tracking-wider text-white/40">{zone.subtitle}</div>
-                <p className="mb-8 leading-relaxed text-white/50">{zone.desc}</p>
-                
-                <div className="flex items-center gap-3 font-black uppercase tracking-[0.2em] text-sky-400 transition-all group-hover:gap-5">
-                  <span className="text-xs">Enter Arena</span>
-                  <ArrowRight size={18} strokeWidth={3} />
-                </div>
-              </div>
-
-              {/* Decorative side accent */}
-              <div 
-                className="absolute right-0 top-1/4 h-1/2 w-1 rounded-l-full opacity-0 transition-opacity group-hover:opacity-100"
-                style={{ backgroundColor: zone.color, boxShadow: `0 0 20px ${zone.color}` }}
-              ></div>
-            </div>
+              {tab}
+            </button>
           ))}
         </div>
 
-        {/* Global Academy Status */}
-        <div className="grid gap-6 md:grid-cols-3">
-          {[
-            { label: 'Platform Load', value: 'Nominal', icon: <Zap size={20} />, color: 'text-amber-400' },
-            { label: 'Active Learners', value: '1,240+', icon: <Star size={20} />, color: 'text-sky-400' },
-            { label: 'Next Match', value: '14m 20s', icon: <Zap size={20} />, color: 'text-rose-400' }
-          ].map((stat, i) => (
-            <div key={i} className="elite-card flex items-center justify-between px-8 py-6">
-              <div>
-                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">{stat.label}</div>
-                <div className="mt-1 text-xl font-black text-white">{stat.value}</div>
-              </div>
-              <div className={`${stat.color} opacity-50`}>{stat.icon}</div>
-            </div>
-          ))}
-        </div>
+        {/* Tab Content */}
+        {selectedTab === 'Upcoming' ? (
+          <UpcomingQuizzes />
+        ) : selectedTab === 'All Rooms' ? (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2" style={{ display: 'grid' }}>
+            {quizRooms.map((room, idx) => (
+              <div key={room.id} className={`quiz-card-premium animate-slide-up stagger-${(idx % 4) + 1}`}>
+                <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+                  <div style={{ flex: 1, minWidth: '200px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '1.5rem' }}>
+                      <div className="quiz-icon-container">
+                        <img src={room.icon} alt={room.title} />
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: '#fee2e2', color: '#ef4444', padding: '4px 10px', borderRadius: '8px', fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', marginBottom: '1rem' }}>
+                            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ef4444' }}></div>
+                            LIVE
+                        </div>
+                      </div>
+                    </div>
 
+                    <h3 style={{ fontSize: '1.5rem', fontWeight: 900, color: '#0f172a', marginBottom: '0.5rem' }}>{room.title}</h3>
+                    <p style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 500, lineHeight: 1.5, marginBottom: '1.5rem', minHeight: '3rem' }}>{room.desc}</p>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                      <div className="quiz-metric-pill">Prize <strong>{room.prize}</strong></div>
+                      <div className="quiz-metric-pill">Entry <strong>{room.entry}</strong></div>
+                      <div className="quiz-metric-pill">Players <strong>{room.players}</strong></div>
+                    </div>
+                  </div>
+
+                  <div style={{ width: '100%', maxWidth: '180px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderLeft: '1px solid #f1f5f9', paddingLeft: '1.5rem' }} className="mobile-full-width">
+                    <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                      <p style={{ fontSize: '0.65rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '0.5rem' }}>STARTS IN</p>
+                      <p style={{ fontSize: '1.5rem', fontWeight: 900, color: '#4f46e5', fontFamily: 'monospace' }}>{room.time}</p>
+                      <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#64748b', marginTop: '0.5rem' }}>Quiz Timings Today, 10:00 AM</p>
+                      <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8' }}>10 Questions • 8 Minutes</p>
+                    </div>
+
+                    <button className={`quiz-join-btn ${room.btnColor}`} onClick={() => {
+                      if (room.id === 'study') {
+                        navigate('/dummy-quiz-flow');
+                      } else {
+                        navigate(room.path);
+                      }
+                    }}>
+                      Join Quiz @ {room.entry}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex-center" style={{ padding: '4rem', flexDirection: 'column', gap: '1rem' }}>
+            <p style={{ fontSize: '1.2rem', fontWeight: 700, color: '#94a3b8' }}>Section {selectedTab} under construction</p>
+            <button className="quiz-tab active" onClick={() => setSelectedTab('All Rooms')}>Back to All Rooms</button>
+          </div>
+        )}
       </div>
+      
+      <style>{`
+        .mobile-full-width {
+          @media (max-width: 480px) {
+            max-width: 100% !important;
+            border-left: none !important;
+            padding-left: 0 !important;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 1.5rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };

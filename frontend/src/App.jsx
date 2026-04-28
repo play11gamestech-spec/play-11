@@ -24,6 +24,8 @@ import HistoryPage from './pages/HistoryPage';
 import ContestListPage from './pages/ContestListPage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import AdminDashboard from './pages/AdminDashboard';
+import MatchQuizRoom from './pages/MatchQuizRoom';
+import DummyQuizFlow from './pages/DummyQuizFlow';
 import './index.css';
 
 const App = () => {
@@ -59,6 +61,8 @@ const App = () => {
           <Route path="/game-quiz-play/:id" element={<Layout><GameQuestionPage /></Layout>} />
           <Route path="/game-review" element={<Layout><GameReviewPage /></Layout>} />
           <Route path="/game-result/:id" element={<Layout><GameResultPage /></Layout>} />
+          <Route path="/match-quiz-room/:id" element={<Layout><MatchQuizRoom /></Layout>} />
+          <Route path="/dummy-quiz-flow" element={<Layout><DummyQuizFlow /></Layout>} />
           
           <Route path="/contests" element={<Layout><ContestListPage /></Layout>} />
           <Route path="/leaderboard/:id" element={<Layout><LeaderboardPage /></Layout>} />
