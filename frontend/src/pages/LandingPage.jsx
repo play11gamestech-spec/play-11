@@ -724,7 +724,7 @@ export default function LandingPage() {
           <a href="#">About</a>
           <a href="#terms">Terms</a>
           <a href="#">Privacy</a>
-          <a href="#">Contact</a>
+          <a href="mailto:support@play11.games">Contact</a>
         </div>
         <p>
           This preview uses skill-based quiz positioning. Rewards are performance-based and not guaranteed. Paid
