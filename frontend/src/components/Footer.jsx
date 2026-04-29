@@ -53,7 +53,6 @@ const Footer = () => {
           <div className="footer-links-col">
              <h4>Company</h4>
              <ul>
-               <li onClick={() => navigate('/legal#terms')}>About QUZO</li>
                <li onClick={() => navigate('/legal#privacy')}>Privacy Policy</li>
                 <li onClick={() => navigate('/legal#refund')}>Refund Policy</li>
                <li onClick={() => navigate('/legal#terms')}>Terms of Use</li>

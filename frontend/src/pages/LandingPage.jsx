@@ -663,7 +663,6 @@ export default function LandingPage() {
 
       <footer className="footer">
         <div className="footer-links">
-          <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#terms"); }}>About</a>
           <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#terms"); }}>Terms</a>
           <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#privacy"); }}>Privacy Policy</a>
           <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#refund"); }}>Refund Policy</a>
