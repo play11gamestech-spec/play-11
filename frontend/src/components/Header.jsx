@@ -17,8 +17,7 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: 'Landing', path: '/', icon: <Globe size={18} /> },
-    { name: 'Home', path: '/home-choice', icon: <Home size={18} /> },
+    { name: 'Home', path: '/', icon: <Home size={18} /> },
     { name: 'Study Zone', path: '/study-home', icon: <BookOpen size={18} /> },
     { name: 'Game Zone', path: '/game-home', icon: <Trophy size={18} /> },
     { name: 'Leaderboard', path: '/leaderboard/1', icon: <Trophy size={18} /> },
@@ -40,7 +39,7 @@ const Header = () => {
       <div className="container" style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         
         {/* Logo - QUZO Branding */}
-        <div className="logo-boxes" onClick={() => navigate('/home-choice')} style={{ cursor: 'pointer' }}>
+        <div className="logo-boxes" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
           <div className="logo-box">Q</div>
           <div className="logo-box">U</div>
           <div className="logo-box">Z</div>

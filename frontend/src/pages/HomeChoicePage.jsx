@@ -69,7 +69,7 @@ const HomeChoicePage = () => {
 
   return (
     <div className="quiz-room-bg">
-      <div className="container" style={{ paddingTop: '6rem', paddingBottom: '6rem' }}>
+      <div className="container" style={{ paddingTop: '6rem', paddingBottom: '6rem', paddingLeft: '5%', paddingRight: '5%' }}>
         
         {/* Welcome Header */}
         <div className="animate-slide-up" style={{ marginBottom: '2.5rem' }}>
