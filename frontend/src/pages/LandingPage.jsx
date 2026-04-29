@@ -659,72 +659,17 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="section white" id="terms">
-        <div className="section-inner" style={{ maxWidth: "800px" }}>
-          <div className="center-head">
-            <div className="eyebrow">Legal</div>
-            <h2>Terms & Conditions – QUZO</h2>
-            <div className="subtext">By accessing QUZO, you agree to these terms.</div>
-          </div>
-          
-          <div style={{ color: "#475569", lineHeight: "1.7", fontSize: "0.95rem" }}>
-            <h3 style={{ color: "#0f172a", marginTop: "2rem", marginBottom: "0.5rem" }}>1. Platform Nature</h3>
-            <p>QUZO is a <em>knowledge-based quiz platform</em>. Rankings depend on user performance such as accuracy and speed.</p>
-
-            <h3 style={{ color: "#0f172a", marginTop: "1.5rem", marginBottom: "0.5rem" }}>2. Eligibility</h3>
-            <ul style={{ paddingLeft: "1.2rem" }}>
-              <li>Minimum age: 18 years</li>
-              <li>One user = one account</li>
-              <li>Correct details required</li>
-            </ul>
-
-            <h3 style={{ color: "#0f172a", marginTop: "1.5rem", marginBottom: "0.5rem" }}>3. Quiz Format</h3>
-            <ul style={{ paddingLeft: "1.2rem" }}>
-              <li>10 Questions</li>
-              <li>8 Minutes</li>
-              <li>Answers must be submitted before timer ends</li>
-            </ul>
-
-            <h3 style={{ color: "#0f172a", marginTop: "1.5rem", marginBottom: "0.5rem" }}>4. Ranking System</h3>
-            <p>Ranking is based on: Correct answers and Time taken. Higher accuracy + faster completion = better rank.</p>
-
-            <h3 style={{ color: "#0f172a", marginTop: "1.5rem", marginBottom: "0.5rem" }}>5. Rewards</h3>
-            <ul style={{ paddingLeft: "1.2rem" }}>
-              <li>Top performers may receive rewards</li>
-              <li>Rewards are <em>performance-based and not guaranteed</em></li>
-              <li>Tie cases → rewards may be split</li>
-            </ul>
-
-            <h3 style={{ color: "#0f172a", marginTop: "1.5rem", marginBottom: "0.5rem" }}>6. Fair Play</h3>
-            <ul style={{ paddingLeft: "1.2rem" }}>
-              <li>No bots / cheating / multiple accounts</li>
-              <li>Violation = disqualification</li>
-            </ul>
-
-            <h3 style={{ color: "#0f172a", marginTop: "1.5rem", marginBottom: "0.5rem" }}>7. Identity Verification</h3>
-            <ul style={{ paddingLeft: "1.2rem" }}>
-              <li>Winners may need to verify identity</li>
-              <li>Mismatch → next user may be awarded</li>
-            </ul>
-
-            <h3 style={{ color: "#0f172a", marginTop: "1.5rem", marginBottom: "0.5rem" }}>8. Payments</h3>
-            <p>Entry amount is non-refundable (except special cases).</p>
-
-            <h3 style={{ color: "#0f172a", marginTop: "1.5rem", marginBottom: "0.5rem" }}>9. Rights</h3>
-            <p>QUZO can modify contests, cancel quizzes, and update rules anytime.</p>
-
-            <h3 style={{ color: "#0f172a", marginTop: "1.5rem", marginBottom: "0.5rem" }}>10. Liability</h3>
-            <p>We are not responsible for network issues, device problems, or missed participation.</p>
-          </div>
-        </div>
-      </section>
+      {/* Removed inline terms section - moved to /legal page */}
 
       <footer className="footer">
         <div className="footer-links">
-          <a href="#">About</a>
-          <a href="#terms">Terms</a>
-          <a href="#">Privacy</a>
-          <a href="mailto:support@play11.games">Contact</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#terms"); }}>About</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#terms"); }}>Terms</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#privacy"); }}>Privacy Policy</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#refund"); }}>Refund Policy</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#refer"); }}>Refer & Earn</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#disclaimer"); }}>Disclaimer</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); navigate("/legal#contact"); }}>Contact</a>
         </div>
         <p>
           This preview uses skill-based quiz positioning. Rewards are performance-based and not guaranteed. Paid

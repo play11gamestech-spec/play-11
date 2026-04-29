@@ -26,6 +26,7 @@ import LeaderboardPage from './pages/LeaderboardPage';
 import AdminDashboard from './pages/AdminDashboard';
 import MatchQuizRoom from './pages/MatchQuizRoom';
 import DummyQuizFlow from './pages/DummyQuizFlow';
+import LegalPage from './pages/LegalPage';
 import './index.css';
 
 const App = () => {
@@ -72,6 +73,9 @@ const App = () => {
           
           {/* Admin Panels */}
           <Route path="/admin" element={<Layout><AdminDashboard /></Layout>} />
+          
+          {/* Legal Pages */}
+          <Route path="/legal" element={<Layout><LegalPage /></Layout>} />
           
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />

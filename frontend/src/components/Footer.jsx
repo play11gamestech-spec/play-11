@@ -53,10 +53,14 @@ const Footer = () => {
           <div className="footer-links-col">
              <h4>Company</h4>
              <ul>
-               <li>About QUZO</li>
-               <li>Privacy Policy</li>
-               <li>Terms of Use</li>
+               <li onClick={() => navigate('/legal#terms')}>About QUZO</li>
+               <li onClick={() => navigate('/legal#privacy')}>Privacy Policy</li>
+                <li onClick={() => navigate('/legal#refund')}>Refund Policy</li>
+               <li onClick={() => navigate('/legal#terms')}>Terms of Use</li>
                <li>Partner With Us</li>
+               <li onClick={() => navigate('/legal#refer')}>Refer & Earn</li>
+                <li onClick={() => navigate('/legal#contact')}>Contact Us</li>
+                <li onClick={() => navigate('/legal#disclaimer')}>Disclaimer</li>
              </ul>
           </div>
         </div>
